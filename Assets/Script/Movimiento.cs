@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Movimiento : MonoBehaviour
 {
@@ -9,7 +10,11 @@ public class Movimiento : MonoBehaviour
 
     private Rigidbody2D rb;
     public Vector2 targetPos;
-
+    [SerializeField] private LayerMask SolidObjectLayer;
+    private Vector2 inputDir;
+    [SerializeField] private float checkRadius = 0.2f;
+    private bool HasInput;
+    
 
     public GameObject player;
 
@@ -41,5 +46,20 @@ public class Movimiento : MonoBehaviour
         }
         transform.position = Vector2.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
 
+        if (inputDir != Vector2.zero)
+        {
+            Vector2 target = (Vector2)transform.position + inputDir * tileSize;
+
+            bool blocked = Physics2D.OverlapCircle(target, checkRadius, SolidObjectLayer) != null;
+
+            if (!blocked)
+            {
+                targetPos = target;
+                HasInput = true;
+
+         
+
+            }
+        }
     }
 }
