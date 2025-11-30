@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 
 public class Voltear : MonoBehaviour
@@ -17,7 +16,7 @@ public class Voltear : MonoBehaviour
     private void Flip()
     {
         voltear = !voltear;
-        transform.DORotate(new(0, voltear ? 0f : 180, 0), 0.25f);
+        //transform.DORotate(new(0, voltear ? 0f : 180, 0), 0.25f);
     }
 
 }

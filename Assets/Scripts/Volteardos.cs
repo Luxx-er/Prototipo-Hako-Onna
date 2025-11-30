@@ -41,7 +41,7 @@ public class Volteardos : MonoBehaviour
     public IEnumerator voltea()
     {
         voltear = !voltear;
-        transform.DORotate(new(0, voltear ? 180f : 0, 0), 0.25f);
+        //transform.DORotate(new(0, voltear ? 180f : 0, 0), 0.25f);
 
         GetComponent<Button>().interactable = false;
 

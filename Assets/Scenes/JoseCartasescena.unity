@@ -380,7 +380,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 721882797}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SumarSistema, Assembly-CSharp
         m_MethodName: Sumar
         m_Mode: 3
@@ -673,7 +673,7 @@ GameObject:
   - component: {fileID: 286746037}
   - component: {fileID: 286746036}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Ruido
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -695,8 +695,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 291, y: 317}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0, y: 350}
+  m_SizeDelta: {x: 24.2215, y: 41.2625}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &286746036
 MonoBehaviour:
@@ -781,7 +781,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 74.6927, w: 0}
+  m_margin: {x: 0, y: 0, z: 0.16641238, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -870,82 +870,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 304964616}
   m_CullTransparentMesh: 1
---- !u!1 &437799790
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 437799791}
-  - component: {fileID: 437799792}
-  m_Layer: 0
-  m_Name: Desactivartodo
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &437799791
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 437799790}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -960.00006, y: -508.96768, z: 0}
-  m_LocalScale: {x: 2.3940153, y: 2.3940153, z: 2.3940153}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1206725334}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &437799792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 437799790}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0052839b0b9a4fc4cb22b76468080c51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Cartastodo: {fileID: 655871541}
---- !u!1 &619394800
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 619394802}
-  m_Layer: 0
-  m_Name: Global Light 2D
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &619394802
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 619394800}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1211.5013, y: -508.96762, z: 0}
-  m_LocalScale: {x: 2.6371381, y: 2.6371381, z: 2.6371381}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1206725334}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &655871541
 GameObject:
   m_ObjectHideFlags: 0
@@ -1062,54 +986,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 713829645}
   m_CullTransparentMesh: 1
---- !u!1 &721882795
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 721882796}
-  - component: {fileID: 721882797}
-  m_Layer: 0
-  m_Name: Sistemasuma
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &721882796
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 721882795}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 399.6339, y: -217.72504, z: 0}
-  m_LocalScale: {x: 2.6371381, y: 2.6371381, z: 2.6371381}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1206725334}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &721882797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 721882795}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4611ddea648e3d741bf36508cb93e829, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textoDecantidad: {fileID: 286746036}
-  cantidad: 0
-  cantidadMaxima: 11
-  desactivarcanvas: {fileID: 437799792}
 --- !u!1 &766507011
 GameObject:
   m_ObjectHideFlags: 0
@@ -1369,7 +1245,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 721882797}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SumarSistema, Assembly-CSharp
         m_MethodName: Sumar
         m_Mode: 3
@@ -1629,10 +1505,7 @@ RectTransform:
   m_Children:
   - {fileID: 286746035}
   - {fileID: 279601784}
-  - {fileID: 721882796}
-  - {fileID: 619394802}
   - {fileID: 655871542}
-  - {fileID: 437799791}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1790,6 +1663,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1410394182}
   m_CullTransparentMesh: 1
+--- !u!1 &1444305252
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1444305254}
+  - component: {fileID: 1444305253}
+  m_Layer: 0
+  m_Name: CartasRuido
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1444305253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1444305252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3854bc1d63d5848a8871e5c3e4991a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textoDecantidad: {fileID: 286746036}
+  cantidad: 0
+  cantidadMaxima: 11
+  Cartastodo: {fileID: 655871541}
+  Carta: {fileID: 0}
+--- !u!4 &1444305254
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1444305252}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 921.58246, y: 282.45862, z: -2.6346111}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1538799531
 GameObject:
   m_ObjectHideFlags: 0
@@ -1973,7 +1895,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 721882797}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SumarSistema, Assembly-CSharp
         m_MethodName: Sumar
         m_Mode: 3
@@ -2118,7 +2040,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 721882797}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SumarSistema, Assembly-CSharp
         m_MethodName: Sumar
         m_Mode: 3
@@ -2339,7 +2261,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 721882797}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SumarSistema, Assembly-CSharp
         m_MethodName: Sumar
         m_Mode: 3
@@ -2475,7 +2397,7 @@ GameObject:
   - component: {fileID: 2120355654}
   - component: {fileID: 2120355655}
   - component: {fileID: 2120355656}
-  - component: {fileID: 2120355658}
+  - component: {fileID: 2120355657}
   m_Layer: 5
   m_Name: Cartas5
   m_TagString: Untagged
@@ -2600,9 +2522,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2120355656}
-        m_TargetAssemblyTypeName: Volteardos, Assembly-CSharp
-        m_MethodName: Flip
+      - m_Target: {fileID: 1444305253}
+        m_TargetAssemblyTypeName: CartasRuido, Assembly-CSharp
+        m_MethodName: desactivarcanvas
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2612,7 +2534,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
-      - m_Target: {fileID: 721882797}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SumarSistema, Assembly-CSharp
         m_MethodName: Sumar
         m_Mode: 3
@@ -2624,8 +2546,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2120355658}
-        m_TargetAssemblyTypeName: Desactivar, Assembly-CSharp
+      - m_Target: {fileID: 1444305253}
+        m_TargetAssemblyTypeName: CartasRuido, Assembly-CSharp
         m_MethodName: Desaparecer
         m_Mode: 1
         m_Arguments:
@@ -2648,7 +2570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c3033aab2cc80a498ca2d84362a4263, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2120355658
+--- !u!114 &2120355657
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2657,9 +2579,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2120355650}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab5ad67a51095ae40a41a78fc0772a1b, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e3854bc1d63d5848a8871e5c3e4991a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textoDecantidad: {fileID: 0}
+  cantidad: 0
+  cantidadMaxima: 0
+  Cartastodo: {fileID: 0}
   Carta: {fileID: 2120355650}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -2668,3 +2594,4 @@ SceneRoots:
   - {fileID: 238185427}
   - {fileID: 1206725334}
   - {fileID: 183778841}
+  - {fileID: 1444305254}
