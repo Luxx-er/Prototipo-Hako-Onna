@@ -1,65 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class CartasRuido : MonoBehaviour
 { 
 
-    [SerializeField] private TextMeshProUGUI textoDecantidad;
-    [SerializeField] private int cantidad;
-    [SerializeField] private int cantidadMaxima;
-    public GameObject Cartastodo;
-    public void Sumar(int cantidadDeEntrada)
-    {
-        if (cantidad >= cantidadMaxima)
-        {
-            desactivarcanvas();
+    [SerializeField] private TextMeshProUGUI TextoDecantidad;
+    [SerializeField] GameObject CanvasRuido;
+    List<int> Cartas = new List<int> { 0, 1, 2, 3, 4, 5};
+    List<int> NumerosCompletos = new List<int> { 0, 1, 2, 3, 4, 5 };
+    int RuidoTotal = 0;
 
-            return;
+
+    private void Update()
+    {
+        if (RuidoTotal >= 11)
+        {
+            StartCoroutine(ActivaHakoOnna());
+        }
+    }
+    public void SacarCarta()
+    {
+        if (RuidoTotal <= 10)
+        {
+            int CartaRandom = Random.Range(0, Cartas.Count);
+            int CartaSacada = Cartas[CartaRandom];
+            Cartas.RemoveAt(CartaRandom);
+            RuidoTotal += CartaSacada;
+            TextoDecantidad.text = RuidoTotal.ToString();
+            Debug.Log("Sacaste" + CartaSacada);
         }
 
-
-        cantidad += cantidadDeEntrada;
-        ActualizarTexto();
     }
+    IEnumerator ActivaHakoOnna()
+    {
+        if (RuidoTotal >= 11)
+        {
+            Debug.Log("Hako Activada");
+            yield return new WaitForSeconds(2f);
+            CanvasRuido.SetActive(false);
 
-    private void ActualizarTexto()
-    {
-        textoDecantidad.text = cantidad.ToString();
-    }
-    public void desactivarcanvas()
-    {
-        StartCoroutine(desaparecercanvas());
-    }
-
-    public IEnumerator desaparecercanvas()
-    {
-        yield return new WaitForSeconds(3f);
-        Cartastodo.SetActive(false);
-    }
-
-    public GameObject Carta;
-    // Start is called before the first frame update
-    public void Desaparecer()
-    {
-        StartCoroutine(desactivar());
-    }
-
-    // Update is called once per frame
-    public IEnumerator desactivar()
-    {
-        yield return new WaitForSeconds(2f);
-        Carta.SetActive(false);
+        }
     }
     // Start is called before the first frame update
     void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
     {
         
     }

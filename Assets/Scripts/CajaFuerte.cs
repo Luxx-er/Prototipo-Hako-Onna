@@ -89,7 +89,6 @@ public class CajaFuerte : MonoBehaviour
 
     void CodigoRandom()
     {
-        Digitos = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
         int Cod = Random.Range(0, Digitos.Count);
         C1 = Digitos[Cod]; Digitos.RemoveAt(Cod);

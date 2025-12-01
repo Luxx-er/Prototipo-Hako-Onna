@@ -63,7 +63,6 @@ public class Player : MonoBehaviour
 
 
     }
-
     private void FixedUpdate()
     {
         if (HasInput)
@@ -78,7 +77,6 @@ public class Player : MonoBehaviour
                 HasInput = false; //Te dejas de mover 
             }
 
-            
         }
     }
 }

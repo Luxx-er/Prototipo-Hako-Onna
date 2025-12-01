@@ -1,32 +1,63 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemsAleatorios : MonoBehaviour
 {
-    public List<GameObject> Items;
-    private GameObject itemActivo = null;
-    public GameObject Tache;
+    public Transform player;
+    public float Radio = 1.3f;
+    private bool jugadorEnRango = false;
+    private bool Obtenido = false;
+    public bool HakoOnnaAqui = false;
 
-    public void ItemsRandom()
+    private void Start()
     {
-        if (Items.Count == 0)
-        {
-            Debug.Log("No hay más ítems disponibles.");
-            return;
-        }
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
-        if (itemActivo != null)
-        {
-            Destroy(itemActivo);
-            itemActivo = null;
-        }
+    private void Update()
+    {
+        float distancia = Vector2.Distance(transform.position, player.position);
+        jugadorEnRango = distancia < Radio;
 
-        int indiceAleatorio = Random.Range(0, Items.Count);
-        GameObject itemSeleccionado = Items[indiceAleatorio];
-        itemActivo = Instantiate(itemSeleccionado, transform.position, transform.rotation);
-        Items.RemoveAt(indiceAleatorio);
-        Items.Add(Tache);
+        if (jugadorEnRango && Input.GetKeyDown(KeyCode.E) && !Obtenido)
+        {
+            if (HakoOnnaAqui == false)
+            {
+                DarItem();
+            }else
+            {
+                InvocarHakoOnna();
+            }
+            
+        }
+    }
+
+    void DarItem()
+    {
+        GameObject prefabItem = ControladorItems.Instance.ObtenerItemAleatorio();
+
+        if (prefabItem != null)
+        {
+            Instantiate(prefabItem, transform.position, Quaternion.identity);
+            Debug.Log("Has encontrado: " + prefabItem.name);
+            Obtenido= true; 
+        }
+        else
+        {
+            Debug.Log("No hay ítems disponibles o ya revisaste todo.");
+        }
+    }
+
+    void InvocarHakoOnna()
+    {
+        GameObject Hako = ControladorItems.Instance.Caballo;
+        Instantiate(Hako, transform.position, Quaternion.identity);
+        Debug.Log("CAGASTE");
+
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, Radio);
     }
 }
-
