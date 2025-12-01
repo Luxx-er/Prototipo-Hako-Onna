@@ -18,9 +18,9 @@ public class Plyr
 public class Turns : MonoBehaviour
 {
 
-    [SerializeField]private List<Player> playerList = new List<Player>();
+   public  List<Player> playerList = new List<Player>();
     [SerializeField] private Plyr[] players;
-    private int currentPlayer = 0;
+    public int currentPlayer = 0;
 
     private void Start()
     {

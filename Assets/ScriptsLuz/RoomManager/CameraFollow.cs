@@ -8,14 +8,12 @@ public class Camera : MonoBehaviour
     [SerializeField] private List<RoomsManager> rooms = new List<RoomsManager>();
     [SerializeField] private CinemachineVirtualCamera follows;
 
+    [SerializeField] private Turns turns;
+
     private void Update()
     {
-        foreach (var item in rooms)
-        {
-            if (item.PlayerInRoom)
-            {
-                follows.Follow = item.gameObject.transform;
-            }
-        }
+        
+                follows.Follow = turns.playerList[turns.currentPlayer].transform;
+        
     }
 }
