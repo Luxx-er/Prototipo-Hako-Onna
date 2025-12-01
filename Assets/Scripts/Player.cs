@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public bool playerInTurn;
     [SerializeField] private float Speed = 5f;
     [SerializeField] private float tileSize = 1f; //Tamaño del tile 
     private Rigidbody2D rb;
