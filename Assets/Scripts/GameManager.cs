@@ -1,27 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public bool Investiga = false;
-    public GameObject Bloqueo;
-
-
     void Start()
     {
     }
     void Update()
     {
-    }
-    public void Investigar()
-    {
-        Investiga = true;
-        if(Bloqueo != null)
-        {
-            Bloqueo.layer = 3;
-        }
     }
    
 }

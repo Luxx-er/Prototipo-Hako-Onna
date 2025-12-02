@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     private Vector2 targetPos;
 
     private Vector2 inputDir;
+    public static bool JugadorEnMovimiento = false;
 
     private void Awake()
     {
@@ -27,7 +28,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!HasInput)
+        if (!HasInput && JugadorEnMovimiento)
         {
             float h = Input.GetAxisRaw("Horizontal");
             float v = Input.GetAxisRaw("Vertical");

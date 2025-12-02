@@ -6,6 +6,7 @@ public class ItemsAleatorios : MonoBehaviour
     public float Radio = 1.3f;
     private bool jugadorEnRango = false;
     private bool Obtenido = false;
+    public static bool Investiga = false;
     public bool HakoOnnaAqui = false;
 
     private void Start()
@@ -18,7 +19,7 @@ public class ItemsAleatorios : MonoBehaviour
         float distancia = Vector2.Distance(transform.position, player.position);
         jugadorEnRango = distancia < Radio;
 
-        if (jugadorEnRango && Input.GetKeyDown(KeyCode.E) && !Obtenido)
+        if (jugadorEnRango && Input.GetKeyDown(KeyCode.E) && !Obtenido && Investiga)
         {
             if (HakoOnnaAqui == false)
             {
@@ -27,7 +28,7 @@ public class ItemsAleatorios : MonoBehaviour
             {
                 InvocarHakoOnna();
             }
-            
+            Player.JugadorEnMovimiento = false;
         }
     }
 
@@ -39,7 +40,8 @@ public class ItemsAleatorios : MonoBehaviour
         {
             Instantiate(prefabItem, transform.position, Quaternion.identity);
             Debug.Log("Has encontrado: " + prefabItem.name);
-            Obtenido= true; 
+            Obtenido = true;
+            Investiga = false;
         }
         else
         {
