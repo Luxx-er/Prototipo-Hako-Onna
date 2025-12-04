@@ -15,6 +15,7 @@ public class AccionesJugador : MonoBehaviour
     [SerializeField] public Button SeMueve;
     [SerializeField] public Button PasaDeTurno;
     [SerializeField] public Button Investiga;
+    
 
     //[SerializeField] private Button MoveInvestigateButton;
     //[SerializeField] private GameObject PanelNoiseCards;
@@ -23,6 +24,10 @@ public class AccionesJugador : MonoBehaviour
     //{
 
     //}
+    private void Start()
+    {
+        
+    }
 
     public void MoveOrInvestigate()
     {
@@ -39,6 +44,7 @@ public class AccionesJugador : MonoBehaviour
 
         Debug.Log("Panel de Cartas");
         JugadorSeMueve = true;
+        Puertas.SeMovera = true;
         Investiga.interactable = false;
         PasaDeTurno.interactable = false;
         SeMueve.interactable = false;
