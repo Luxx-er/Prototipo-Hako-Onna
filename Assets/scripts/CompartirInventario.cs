@@ -10,9 +10,8 @@ public class CompartirInventario : MonoBehaviour
     [SerializeField] private GameObject PestañaInventario;
     [SerializeField] public Button Compartir;
     public static bool PuedeCompartrir = false;
-    private void Update()
-    {
-    }
+
+
     public void InventarioCompartido()
     {
             Debug.Log("Mostrar Inventario");
@@ -26,5 +25,6 @@ public class CompartirInventario : MonoBehaviour
         //Cambiar entre inventarios, presionar boton de tag y cambia entre paneles
         Debug.Log("Sobrepone Inventario");
     }
+    //En el momento que se istancie un objeto se agrege al scriptable object del inventario, CAPACITY (max Elements)
 
 }

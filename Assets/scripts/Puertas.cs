@@ -10,7 +10,7 @@ public class Puertas : MonoBehaviour
     private bool jugadorEnRango = false;
     private bool SeMovio = false;
     public static bool SeMovera = false;
-    public enum Direccion { Norte, Sur, Este, Oeste}
+    public enum Direccion { Norte, Sur, Este, Oeste} //Enum = Lista
     public Direccion direccion;
     public float DistanciaSalto = 7f;
 

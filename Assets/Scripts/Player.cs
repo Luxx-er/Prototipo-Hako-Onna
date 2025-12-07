@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     private Vector2 targetPos;
 
     private Vector2 inputDir;
-    public static bool JugadorEnMovimiento = false;
+    public static bool JugadorEnMovimiento = false; //
     public static bool Muevete = false;
 
     private void Awake()
