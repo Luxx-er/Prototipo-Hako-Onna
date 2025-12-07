@@ -7,25 +7,25 @@ using UnityEngine;
 public class CajaFuerte : MonoBehaviour
 {
     [Header("Texto UI")]
-    [SerializeField] TextMeshProUGUI Digito1;
+    [SerializeField] TextMeshProUGUI Digito1; //Textos que se actualizan 
     [SerializeField] TextMeshProUGUI Digito2;
     [SerializeField] TextMeshProUGUI Digito3;
 
     [Header("Prefabs")]
-    [SerializeField] private List<GameObject> PrefabsDisponibles;
-    public List<GameObject> PrefabsRestantes = new List<GameObject>();
+    [SerializeField] private List<GameObject> PrefabsDisponibles; //Numeros de la caja fuerte
+    public List<GameObject> PrefabsRestantes = new List<GameObject>(); //Lista vacia mete los numeros que sobran para encontrarlos en el mapa
 
-    int D1, D2, D3;
-    int C1, C2, C3;
+    int D1, D2, D3; //D= Digito
+    int C1, C2, C3; //C= Codigo
     bool correcta = false;
 
     List<int> Digitos = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    List<int> DigitosCompletos = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    List<int> DigitosCompletos = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }; //Cuando recargas la escena, salga un codigo aleatorio
 
-    public static bool CajaAbierta = false;
+    public static bool CajaAbierta = false; //Booleana falsa para cuando desbloques la caja fuerte te de el item y se vuelva verdadera
     void Start()
     {
-        CodigoRandom();
+        CodigoRandom(); //Cuando inica sale el codigo random 
     }
     public void MasD1() { if (D1 < 9) { D1++; Digito1.text = D1.ToString(); } }
     public void MenosD1() { if (D1 > 0) { D1--; Digito1.text = D1.ToString(); } }
@@ -36,11 +36,11 @@ public class CajaFuerte : MonoBehaviour
 
     public void Abrir()
     {
-        GameObject Llaves = ControladorItems.Instance.Llaves;
+        GameObject Llaves = ControladorItems.Instance.Llaves;  //Referenciando al codigo ControladorItems 
         int[] entrada = { D1, D2, D3 };
         int[] codigo = { C1, C2, C3 };
 
-        if (entrada.OrderBy(x => x).SequenceEqual(codigo.OrderBy(x => x)))
+        if (entrada.OrderBy(x => x).SequenceEqual(codigo.OrderBy(x => x))) //Acomoda los numeros de menor a mayor, los compara y aunque 
         {
             correcta = true;
         }
@@ -48,11 +48,11 @@ public class CajaFuerte : MonoBehaviour
         if (correcta)
         {
                 Debug.Log("Contraseña correcta");
-                Instantiate(Llaves, transform.position, Quaternion.identity);
-                Inventario inventario = FindObjectOfType<Inventario>();
+                Instantiate(Llaves, transform.position, Quaternion.identity); //Instancia las llaves y cambia las escalas para ponerlas en el inventario 
+                Inventario inventario = FindObjectOfType<Inventario>(); //Referencias al codigo del inventario 
                 if (inventario != null)
                 {
-                    inventario.AgregarItem(Llaves);
+                    inventario.AgregarItem(Llaves); //Referencias la funcion del codigo del inventario y agregas las llaves
                 }
 
                 Debug.Log("Has conseguido las " + Llaves.name);
@@ -66,7 +66,7 @@ public class CajaFuerte : MonoBehaviour
     void CodigoRandom()
     {
       
-        List<int> copia = new List<int>(Digitos);
+        List<int> copia = new List<int>(Digitos); //Generas una copia de la lista de digitos 
 
         int rand = Random.Range(0, copia.Count);
         C1 = copia[rand]; copia.RemoveAt(rand);

@@ -34,9 +34,9 @@ public class AccionesJugador : MonoBehaviour
 
         Debug.Log("Panel de Cartas");
         JugadorInvestiga = true;
-        ItemsAleatorios.Investiga = true;
-        Investiga.interactable = false;
-        PasaDeTurno.interactable = false;
+        ItemsAleatorios.Investiga = true; //booleana referenciando el codigo de ItemsAleatorios
+        Investiga.interactable = false; //No puedes interactuar con los botones porque se vuelven falsos 
+        PasaDeTurno.interactable = false; 
         SeMueve.interactable = false;
     }
     public void CambiaDeCuarto()
@@ -44,7 +44,7 @@ public class AccionesJugador : MonoBehaviour
 
         Debug.Log("Panel de Cartas");
         JugadorSeMueve = true;
-        Puertas.SeMovera = true;
+        Puertas.SeMovera = true;  //booleana referenciando el codigo de Puertas
         Investiga.interactable = false;
         PasaDeTurno.interactable = false;
         SeMueve.interactable = false;

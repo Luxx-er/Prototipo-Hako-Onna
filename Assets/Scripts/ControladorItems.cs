@@ -29,10 +29,8 @@ public class ControladorItems : MonoBehaviour
     }
     public void Start()
     {
-        CajaFuerte caja = FindAnyObjectByType<CajaFuerte>();
-        List<GameObject> NuevosItems = caja.AgregarItems();
-        Items.AddRange(NuevosItems);
-
-        
+        CajaFuerte caja = FindAnyObjectByType<CajaFuerte>(); //Encuantra el objeto con el codigo de CajaFuerte
+        List<GameObject> NuevosItems = caja.AgregarItems(); //Referencia los items Restantes
+        Items.AddRange(NuevosItems); //Al game object se le agregan los iconos restantes
     }
 }

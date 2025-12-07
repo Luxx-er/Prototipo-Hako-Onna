@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     private Vector2 targetPos;
 
     private Vector2 inputDir;
-    public static bool JugadorEnMovimiento = false; //
+    public static bool JugadorEnMovimiento = false; //Jugador en movimiento es falso, permite que el jugador se mueva despues de hacer alguna accion 
     public static bool Muevete = false;
 
     private void Awake()
@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
             float h = Input.GetAxisRaw("Horizontal");
             float v = Input.GetAxisRaw("Vertical");
 
-            if (Mathf.Abs(v) > 0.01f)
+            if (Mathf.Abs(v) > 0.01f) //Moviniento en ejes, para checar que se mueva o en x o y, no vertical (Mathf.Abs: valor numerico)
             {
                 inputDir = new Vector2(0, Mathf.Sign(v)); //si es positivo regresa a 1 si es negativo regresa a -1
             }
@@ -46,7 +46,8 @@ public class Player : MonoBehaviour
             {
                 inputDir = Vector2.zero;  //los dos valores son 0 
             }
-            if (inputDir != Vector2.zero)
+            
+            if (inputDir != Vector2.zero) //detectar si hay un objeto enfrente
             {
                 Vector2 target = (Vector2)transform.position + inputDir * tileSize;
                 bool blocked = Physics2D.OverlapCircle(target, checkRadius, SolidObjectLayer) != null;
@@ -54,7 +55,7 @@ public class Player : MonoBehaviour
                 if (!blocked) //SI no estoy bloqueado
                 {
                     targetPos = target;
-                    HasInput = true;
+                    HasInput = true; //Ya se puede mover
 
                     //Animator goes here
 
@@ -69,7 +70,7 @@ public class Player : MonoBehaviour
     {
         if (HasInput)
         {
-            float step = Speed * Time.fixedDeltaTime;
+            float step = Speed * Time.fixedDeltaTime; //Velocidad del movimiento
             Vector2 newPos = Vector2.MoveTowards(rb.position, targetPos, step);
             rb.MovePosition(newPos);
 
