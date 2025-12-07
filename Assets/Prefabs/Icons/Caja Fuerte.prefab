@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3508514432243399445}
   - component: {fileID: 6988501222356090052}
+  - component: {fileID: -3267371684262270824}
   m_Layer: 0
   m_Name: Caja Fuerte
   m_TagString: Untagged
@@ -84,3 +85,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-3267371684262270824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738361694554633322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc9ba26cb0686c244bb02b0c5b5d00b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icono: {fileID: 21300000, guid: a83402152159dd44c9057073d5b86cda, type: 3}

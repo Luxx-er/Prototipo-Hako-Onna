@@ -86,6 +86,9 @@ public class CartasRuido : MonoBehaviour
 
     IEnumerator ActivaHakoOnna()
     {
+        ItemsAleatorios[] Casillas = FindObjectsOfType<ItemsAleatorios>();
+        int Esconder = Random.Range(0, Casillas.Length);
+        Casillas[Esconder].HakoOnnaAqui = true;
         Debug.Log("Hako Activada");
         CanvasRuido.SetActive(false);
         yield return new WaitForSeconds(1f);

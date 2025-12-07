@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7587192559826871734}
   - component: {fileID: 5945762184117680550}
+  - component: {fileID: 8991295644690093277}
   m_Layer: 0
   m_Name: Llaves
   m_TagString: Untagged
@@ -84,3 +85,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8991295644690093277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8364171826160331368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc9ba26cb0686c244bb02b0c5b5d00b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icono: {fileID: 21300000, guid: 45eec9fc810681c4eaad9de70374d306, type: 3}
