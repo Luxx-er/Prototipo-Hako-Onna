@@ -6,8 +6,7 @@ public class ControladorItems : MonoBehaviour
     public static ControladorItems Instance;
     public List<GameObject> Items;
     public GameObject Tache;
-    public GameObject Caballo;
-
+    [SerializeField] public GameObject Muerte;
     private void Awake()
     {
         if (Instance == null)
