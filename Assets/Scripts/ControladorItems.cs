@@ -6,7 +6,9 @@ public class ControladorItems : MonoBehaviour
     public static ControladorItems Instance;
     public List<GameObject> Items;
     public GameObject Tache;
+    public GameObject Llaves;
     [SerializeField] public GameObject Muerte;
+    List<GameObject> DigitosRestantes = new List<GameObject>();
     private void Awake()
     {
         if (Instance == null)
@@ -27,8 +29,10 @@ public class ControladorItems : MonoBehaviour
     }
     public void Start()
     {
-        ItemsAleatorios[] Casillas = FindObjectsOfType<ItemsAleatorios>();
-        int Esconder = Random.Range(0, Casillas.Length);
-        Casillas[Esconder].HakoOnnaAqui = true;
+        CajaFuerte caja = FindAnyObjectByType<CajaFuerte>();
+        List<GameObject> NuevosItems = caja.AgregarItems();
+        Items.AddRange(NuevosItems);
+
+        
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ItemsAleatorios : MonoBehaviour
@@ -8,7 +9,6 @@ public class ItemsAleatorios : MonoBehaviour
     private bool Obtenido = false;
     public static bool Investiga = false;
     public bool HakoOnnaAqui = false;
-
 
     private void Start()
     {
@@ -24,7 +24,7 @@ public class ItemsAleatorios : MonoBehaviour
         {
             if (HakoOnnaAqui == false)
             {
-                DarItem();
+                StartCoroutine(DarItem());
             }else
             {
                 InvocarHakoOnna();
@@ -33,9 +33,10 @@ public class ItemsAleatorios : MonoBehaviour
         }
     }
 
-    void DarItem()
+    IEnumerator DarItem()
     {
         GameObject prefabItem = ControladorItems.Instance.ObtenerItemAleatorio();
+        GameObject Tache = ControladorItems.Instance.Tache;
 
         if (prefabItem != null)
         {
@@ -44,10 +45,13 @@ public class ItemsAleatorios : MonoBehaviour
             Obtenido = true;
             Investiga = false;
         }
-        else
+        yield return new WaitForSeconds(2f);
+        Inventario inventario = FindObjectOfType<Inventario>();
+        if (inventario != null)
         {
-            Debug.Log("No hay ítems disponibles o ya revisaste todo.");
+            inventario.AgregarItem(prefabItem);
         }
+        Instantiate(Tache, transform.position, Quaternion.identity);
     }
 
     void InvocarHakoOnna()
