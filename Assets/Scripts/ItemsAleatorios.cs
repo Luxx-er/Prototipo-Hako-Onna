@@ -9,6 +9,7 @@ public class ItemsAleatorios : MonoBehaviour
     public static bool Investiga = false;
     public bool HakoOnnaAqui = false;
 
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -51,8 +52,8 @@ public class ItemsAleatorios : MonoBehaviour
 
     void InvocarHakoOnna()
     {
-        GameObject Hako = ControladorItems.Instance.Caballo;
-        Instantiate(Hako, transform.position, Quaternion.identity);
+        GameObject Hako = ControladorItems.Instance.Muerte;
+        Hako.SetActive(true);
         Debug.Log("CAGASTE");
 
     }

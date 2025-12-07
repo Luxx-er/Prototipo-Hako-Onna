@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GiroDeCartas : MonoBehaviour
 {
-    public bool BotonActivo = false;
     // Start is called before the first frame update
     void Start()
     {
