@@ -69,7 +69,7 @@ public class CajaFuerte : MonoBehaviour
         List<int> copia = new List<int>(Digitos); //Generas una copia de la lista de digitos 
 
         int rand = Random.Range(0, copia.Count);
-        C1 = copia[rand]; copia.RemoveAt(rand);
+        C1 = copia[rand]; copia.RemoveAt(rand);  //Se guarda en numero en el Codigo1 y se elimina de la lista para que no se vuelva a generar en el siguiente 
 
         rand = Random.Range(0, copia.Count);
         C2 = copia[rand]; copia.RemoveAt(rand);
@@ -80,7 +80,7 @@ public class CajaFuerte : MonoBehaviour
         Debug.Log($" Código generado: {C1}{C2}{C3}");
 
 
-        PrefabsRestantes = new List<GameObject>(PrefabsDisponibles);
+        PrefabsRestantes = new List<GameObject>(PrefabsDisponibles); //Lista que guarda los numeros que quedan de la copia lista 
 
         EliminarPrefabsDeCodigo(new int[] { C1, C2, C3 });
 
