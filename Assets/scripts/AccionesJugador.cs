@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,20 +16,12 @@ public class AccionesJugador : MonoBehaviour
     [SerializeField] public Button SeMueve;
     [SerializeField] public Button PasaDeTurno;
     [SerializeField] public Button Investiga;
-    
+    public static bool TurnoTerminado = false;
 
-    //[SerializeField] private Button MoveInvestigateButton;
-    //[SerializeField] private GameObject PanelNoiseCards;
-
-    //public void MoveAndInvestigate()
-    //{
-
-    //}
-    private void Start()
+    private void Update()
     {
         
     }
-
     public void MoveOrInvestigate()
     {
 
@@ -55,6 +48,8 @@ public class AccionesJugador : MonoBehaviour
         Investiga.interactable = false;
         PasaDeTurno.interactable = false;
         SeMueve.interactable = false;
+        
+        TurnoTerminado = false;
         PanelTurno.SetActive(true);
         Turno.text = "Siguiente Turno";
     }

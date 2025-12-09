@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     public static bool JugadorEnMovimiento = false; //Jugador en movimiento es falso, permite que el jugador se mueva despues de hacer alguna accion 
     public static bool Muevete = false;
 
+    public bool playerInTurn;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
