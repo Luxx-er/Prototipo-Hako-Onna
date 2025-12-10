@@ -1988,7 +1988,7 @@ Transform:
   m_GameObject: {fileID: 365381458}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.56, z: 0}
+  m_LocalPosition: {x: 0, y: 5.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3288,14 +3288,14 @@ MonoBehaviour:
   m_Priority: 10
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 365381463}
+  m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 4.5
     OrthographicSize: 7.2
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
-    ModeOverride: 0
+    ModeOverride: 1
     LensShift: {x: 0, y: 0}
     GateFit: 2
     FocusDistance: 10
@@ -3880,6 +3880,7 @@ MonoBehaviour:
   SeMueve: {fileID: 0}
   PasaDeTurno: {fileID: 0}
   Investiga: {fileID: 0}
+  Jugadores: []
 --- !u!4 &549681791
 Transform:
   m_ObjectHideFlags: 0
@@ -4359,6 +4360,7 @@ MonoBehaviour:
   SeMueve: {fileID: 1217658536}
   PasaDeTurno: {fileID: 469938799}
   Investiga: {fileID: 707487977}
+  Jugadores: []
 --- !u!114 &685224972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6061,7 +6063,7 @@ GameObject:
   - component: {fileID: 895275547}
   m_Layer: 0
   m_Name: Player2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6208,7 +6210,7 @@ Transform:
   m_GameObject: {fileID: 895275546}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.6, y: 18.5, z: 0}
+  m_LocalPosition: {x: -0.6, y: 8.87, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14157,7 +14159,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 902c6c5287638b34e92a058b1322b0e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   Radio: 1.3
   direccion: 0
   DistanciaSalto: 8
@@ -14414,7 +14415,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f7c4f83476d834448682b550ef15ca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   Radio: 1.3
   HakoOnnaAqui: 0
 --- !u!4 &988592986157035309
@@ -14563,7 +14563,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f7c4f83476d834448682b550ef15ca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   Radio: 1.3
   HakoOnnaAqui: 0
 --- !u!1 &1483954974137130173
@@ -14816,7 +14815,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f7c4f83476d834448682b550ef15ca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   Radio: 1.3
   HakoOnnaAqui: 0
 --- !u!4 &2615938945912679433
@@ -15167,7 +15165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f7c4f83476d834448682b550ef15ca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   Radio: 1.3
   HakoOnnaAqui: 0
 --- !u!1 &3643948424168744584
@@ -15201,7 +15198,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 902c6c5287638b34e92a058b1322b0e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   Radio: 1.3
   direccion: 0
   DistanciaSalto: 8
@@ -15247,7 +15243,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 902c6c5287638b34e92a058b1322b0e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   Radio: 1.3
   direccion: 3
   DistanciaSalto: 8
@@ -19359,7 +19354,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 902c6c5287638b34e92a058b1322b0e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   Radio: 1.3
   direccion: 2
   DistanciaSalto: 8
@@ -19819,7 +19813,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 902c6c5287638b34e92a058b1322b0e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   Radio: 1.3
   direccion: 1
   DistanciaSalto: 8
@@ -19878,7 +19871,7 @@ Transform:
   m_GameObject: {fileID: 7386589334136174270}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 6.53, z: 10}
+  m_LocalPosition: {x: 0, y: 5.87, z: 10}
   m_LocalScale: {x: 3.4803782, y: 0.5326, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

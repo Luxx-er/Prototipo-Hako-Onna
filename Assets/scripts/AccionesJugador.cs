@@ -16,11 +16,31 @@ public class AccionesJugador : MonoBehaviour
     [SerializeField] public Button SeMueve;
     [SerializeField] public Button PasaDeTurno;
     [SerializeField] public Button Investiga;
-    public static bool TurnoTerminado = false;
 
-    private void Update()
+    [SerializeField] private List<GameObject> Jugadores = new List<GameObject>();
+    
+    public static AccionesJugador Instance { get; private set; }
+
+    private void Awake()
     {
-        
+        Instance = this;
+    }
+    private void Update()
+    { 
+    }
+    private void Start()
+    {
+        Player[] jugadores  = FindObjectsOfType<Player>();
+
+        foreach (Player player in jugadores)
+        {
+            Jugadores.Add(player.gameObject);
+           if (player.playerInTurn)
+            {
+                Puertas.player = player.transform;
+                ItemsAleatorios.player = transform;
+            }
+        }
     }
     public void MoveOrInvestigate()
     {
@@ -48,9 +68,14 @@ public class AccionesJugador : MonoBehaviour
         Investiga.interactable = false;
         PasaDeTurno.interactable = false;
         SeMueve.interactable = false;
-        
-        TurnoTerminado = false;
+        Turnos.Instance.NextTurn();
         PanelTurno.SetActive(true);
         Turno.text = "Siguiente Turno";
+    }
+    public void ActivarBotones()
+    {
+        Investiga.interactable = true;
+        PasaDeTurno.interactable = true;
+        SeMueve.interactable = true;           
     }
 }

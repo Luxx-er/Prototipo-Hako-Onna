@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ItemsAleatorios : MonoBehaviour
 {
-    public Transform player;
+    public static Transform player;
     public float Radio = 1.3f;
     private bool jugadorEnRango = false;
     private bool Obtenido = false;
@@ -17,10 +17,11 @@ public class ItemsAleatorios : MonoBehaviour
 
     private void Update()
     {
+        
         float distancia = Vector2.Distance(transform.position, player.position);
         jugadorEnRango = distancia < Radio;
 
-        if (jugadorEnRango && Input.GetKeyDown(KeyCode.E) && !Obtenido && Investiga)
+        if (jugadorEnRango && Input.GetKeyDown(KeyCode.E) && !Obtenido && Investiga && Player.PuedeInteractuar)
         {
             if (HakoOnnaAqui == false)
             {
@@ -52,6 +53,9 @@ public class ItemsAleatorios : MonoBehaviour
             inventario.AgregarItem(prefabItem);
         }
         Instantiate(Tache, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(4f);
+        Turnos.Instance.NextTurn();
+
     }
 
     void InvocarHakoOnna()

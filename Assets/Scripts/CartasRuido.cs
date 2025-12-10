@@ -24,8 +24,10 @@ public class CartasRuido : MonoBehaviour
 
     private void Update()
     {
-        if (AccionesJugador.JugadorInvestiga || AccionesJugador.JugadorSeMueve)
+        if (AccionesJugador.JugadorInvestiga || AccionesJugador.JugadorSeMueve) 
+        {
             CanvasRuido.SetActive(true);
+        }
         else
             CanvasRuido.SetActive(false);
 
@@ -53,13 +55,14 @@ public class CartasRuido : MonoBehaviour
         RuidoTotal += CartaSacada;
         TextoDecantidad.text = RuidoTotal.ToString();
         Debug.Log("Sacaste la carta con valor: " + CartaSacada);
-
+        yield return new WaitForSeconds(2f);
         AcumularCartas();
 
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(3f);
         AccionesJugador.JugadorInvestiga = false;
         AccionesJugador.JugadorSeMueve = false;
         Player.JugadorEnMovimiento = true;
+        Mazo.blocksRaycasts = true;
     }
 
     void AcumularCartas()

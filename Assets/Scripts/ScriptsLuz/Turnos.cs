@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum Actions { INVESTIGAR, AVANZAR, PASAR }
+
 public class Plyr
 {
     public string name;
@@ -78,26 +79,25 @@ public class Turnos : MonoBehaviour
         {
             case Actions.INVESTIGAR:
                 Debug.Log(player.name + "investigo");
-                NextTurn();
+                
                 break;
             case Actions.AVANZAR:
                 Debug.Log(player.name + "avanzo");
-                NextTurn();
+               
                 break;
             case Actions.PASAR:
                 Debug.Log(player.name + "paso turno");
-                NextTurn();
+                
                 break;
         }
     }
 
-        public void NextTurn()
+    public void NextTurn()
     {
         currentPlayer = (currentPlayer + 1) % players.Length;
         Debug.Log("Turno de" + players[currentPlayer].name);
         TurnCamera();
-        AccionesJugador.TurnoTerminado = true;
-        
+        AccionesJugador.Instance.ActivarBotones();
     }
         
 

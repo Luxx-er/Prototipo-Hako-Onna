@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,8 +17,9 @@ public class Player : MonoBehaviour
     private Vector2 inputDir;
     public static bool JugadorEnMovimiento = false; //Jugador en movimiento es falso, permite que el jugador se mueva despues de hacer alguna accion 
     public static bool Muevete = false;
-
+    public static bool PuedeInteractuar = false;
     public bool playerInTurn;
+    public static Player Instance { get; private set; }
 
     private void Awake()
     {
@@ -26,12 +28,13 @@ public class Player : MonoBehaviour
         Vector2 p = transform.position;
         rb.position = new Vector2(Mathf.Round(p.x / tileSize) * tileSize, Mathf.Round(p.y / tileSize) * tileSize);
         targetPos = rb.position;
+        Instance = this;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!HasInput && JugadorEnMovimiento)
+        if (!HasInput && JugadorEnMovimiento && playerInTurn == true)
         {
             float h = Input.GetAxisRaw("Horizontal");
             float v = Input.GetAxisRaw("Vertical");
@@ -65,10 +68,9 @@ public class Player : MonoBehaviour
             }
 
         }
-
-
-    }
-    private void FixedUpdate()
+         PuedeInteractuar = true;
+}
+private void FixedUpdate()
     {
         if (HasInput)
         {

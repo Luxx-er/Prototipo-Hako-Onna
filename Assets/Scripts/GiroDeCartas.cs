@@ -15,7 +15,7 @@ public class GiroDeCartas : MonoBehaviour
     }
     IEnumerator DesaparecerCarta()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         gameObject.SetActive(false);
     }
     // Update is called once per frame

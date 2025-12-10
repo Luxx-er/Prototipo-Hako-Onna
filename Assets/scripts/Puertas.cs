@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Puertas : MonoBehaviour
 {
-    public Transform player;
+    public static Transform player;
     public float Radio = 1.3f;
     private bool jugadorEnRango = false;
     private bool SeMovio = false;
@@ -16,15 +16,16 @@ public class Puertas : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindAnyObjectByType<Player>().transform;
     }
 
     private void Update()
     {
+        
         float distancia = Vector2.Distance(transform.position, player.position);
         jugadorEnRango = distancia < Radio;
 
-        if (jugadorEnRango && Input.GetKeyDown(KeyCode.E) && !SeMovio && SeMovera)
+        if (jugadorEnRango && Input.GetKeyDown(KeyCode.E) && !SeMovio && SeMovera && Player.PuedeInteractuar)
         {
             Player.JugadorEnMovimiento = false;
             Debug.Log("En rango de una puerta");
@@ -55,7 +56,13 @@ public class Puertas : MonoBehaviour
                     break;
             }
             player.position = nuevaPos;
+            Cambio();
         }
+    } 
+    IEnumerator Cambio()
+    {
+        yield return new WaitForSeconds(2f);
+        Turnos.Instance.NextTurn();
     }
 
     private void OnDrawGizmosSelected()
