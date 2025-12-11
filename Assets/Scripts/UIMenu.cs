@@ -12,7 +12,7 @@ public class UIMenu : MonoBehaviour
     }
     public void Siguiente()
     {
-        SceneManager.LoadScene("Interfaz");
+        SceneManager.LoadScene("InterfazPrincipal");
     }
 
 }

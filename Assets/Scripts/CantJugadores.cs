@@ -54,6 +54,6 @@ public class CantidadJugadores : MonoBehaviour
     }
     public void Siguiente()
     {
-        SceneManager.LoadScene("Interfaz");
+        SceneManager.LoadScene("InterfazPrincipal");
     }
 }
