@@ -1,23 +1,39 @@
 using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ItemsAleatorios : MonoBehaviour
 {
-    public static Transform player;
+    
     public float Radio = 1.3f;
     private bool jugadorEnRango = false;
     private bool Obtenido = false;
     public static bool Investiga = false;
     public bool HakoOnnaAqui = false;
-
+    public List<GameObject> Jugadores;
+    
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        Player[] Personajes = FindObjectsOfType<Player>();
+        foreach(Player personajes in Personajes)
+        {
+            Jugadores.Add(personajes.gameObject);
+        }
     }
 
     private void Update()
     {
-        
+        Transform player = null;
+        foreach (GameObject obj in Jugadores)
+        {
+            Player Jugador = obj.GetComponent<Player>();
+            if (Jugador.playerInTurn)
+            {
+                player = obj.transform;
+                break;
+            }
+        }
         float distancia = Vector2.Distance(transform.position, player.position);
         jugadorEnRango = distancia < Radio;
 
@@ -30,7 +46,6 @@ public class ItemsAleatorios : MonoBehaviour
             {
                 InvocarHakoOnna();
             }
-            Player.JugadorEnMovimiento = false;
         }
     }
 
@@ -38,7 +53,7 @@ public class ItemsAleatorios : MonoBehaviour
     {
         GameObject prefabItem = ControladorItems.Instance.ObtenerItemAleatorio();
         GameObject Tache = ControladorItems.Instance.Tache;
-
+        Player.JugadorEnMovimiento = false;
         if (prefabItem != null)
         {
             Instantiate(prefabItem, transform.position, Quaternion.identity);
@@ -53,7 +68,7 @@ public class ItemsAleatorios : MonoBehaviour
             inventario.AgregarItem(prefabItem);
         }
         Instantiate(Tache, transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
         Turnos.Instance.NextTurn();
 
     }
@@ -61,6 +76,8 @@ public class ItemsAleatorios : MonoBehaviour
     void InvocarHakoOnna()
     {
         GameObject Hako = ControladorItems.Instance.Muerte;
+        Player.JugadorEnMovimiento = false;
+        Obtenido = true;
         Hako.SetActive(true);
         Debug.Log("CAGASTE");
 

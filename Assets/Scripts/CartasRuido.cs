@@ -9,6 +9,12 @@ public class CartasRuido : MonoBehaviour
     [SerializeField] private TextMeshProUGUI TextoDecantidad;
     [SerializeField] private GameObject CanvasRuido;
     [SerializeField] private CanvasGroup Mazo;
+    [SerializeField] private GameObject Carta0;
+    [SerializeField] private GameObject Carta1;
+    [SerializeField] private GameObject Carta2;
+    [SerializeField] private GameObject Carta3;
+    [SerializeField] private GameObject Carta4;
+    [SerializeField] private GameObject Carta5;
 
     [Header("Prefabs y puntos de aparición")]
     [SerializeField] private List<GameObject> PrefabsCartas; 
@@ -21,10 +27,10 @@ public class CartasRuido : MonoBehaviour
     private int RuidoTotal = 0;
     private int Indice = 0;
     private int CartaSacada;
-
+    public static bool HakoEnTurno = false;
     private void Update()
     {
-        if (AccionesJugador.JugadorInvestiga || AccionesJugador.JugadorSeMueve) 
+        if (AccionesJugador.JugadorInvestiga || AccionesJugador.JugadorSeMueve && !HakoEnTurno) 
         {
             CanvasRuido.SetActive(true);
         }
@@ -34,12 +40,14 @@ public class CartasRuido : MonoBehaviour
         if (RuidoTotal >= 11)
         {
             StartCoroutine(ActivaHakoOnna());
-            StartCoroutine(ReiniciarCartas());
+            CanvasRuido.SetActive(false);
+            
         }
     }
 
     public void SeleccionaCarta()
     {
+        if (HakoEnTurno) return;
         StartCoroutine(SacarCarta());
         Mazo.blocksRaycasts = false;
     }
@@ -47,17 +55,13 @@ public class CartasRuido : MonoBehaviour
     IEnumerator SacarCarta()
     {
         CanvasRuido.SetActive(true);
-
         int CartaRandom = Random.Range(0, Cartas.Count);
         CartaSacada = Cartas[CartaRandom];
         Cartas.RemoveAt(CartaRandom);
-
         RuidoTotal += CartaSacada;
-        TextoDecantidad.text = RuidoTotal.ToString();
         Debug.Log("Sacaste la carta con valor: " + CartaSacada);
         yield return new WaitForSeconds(2f);
         AcumularCartas();
-
         yield return new WaitForSeconds(3f);
         AccionesJugador.JugadorInvestiga = false;
         AccionesJugador.JugadorSeMueve = false;
@@ -67,15 +71,10 @@ public class CartasRuido : MonoBehaviour
 
     void AcumularCartas()
     {
-        if (Indice >= PuntosCartas.Count)
-        {
-            Debug.LogWarning("Ya no hay más espacios para cartas en mano.");
-            return;
-        }
 
         GameObject prefab = PrefabsCartas[CartaSacada];
         Transform punto = PuntosCartas[Indice];
-
+        TextoDecantidad.text = RuidoTotal.ToString();
         GameObject nuevaCarta = Instantiate(prefab, punto.position, Quaternion.identity);
         nuevaCarta.transform.SetParent(punto, false);
         nuevaCarta.transform.localPosition = Vector3.zero;
@@ -89,30 +88,54 @@ public class CartasRuido : MonoBehaviour
 
     IEnumerator ActivaHakoOnna()
     {
+        HakoEnTurno = true;
+        CanvasRuido.SetActive(false);       // Oculta el panel de cartas al instante
+        Player.JugadorEnMovimiento = false; // Bloquea cualquier movimiento
+        AccionesJugador.JugadorInvestiga = false;
+        AccionesJugador.JugadorSeMueve = false;
+        ItemsAleatorios.Investiga = false;
+        Puertas.SeMovera = false;
+
+        //Esperar un breve instante antes de pasar turno (solo para permitir animaciones o efectos)
+        yield return new WaitForSeconds(1f);
+        Turnos.Instance.NextTurn();
+        RuidoTotal = 0;
+
+        //Hako se esconde en una casilla
         ItemsAleatorios[] Casillas = FindObjectsOfType<ItemsAleatorios>();
         int Esconder = Random.Range(0, Casillas.Length);
         Casillas[Esconder].HakoOnnaAqui = true;
-        Debug.Log("Hako Activada");
-        CanvasRuido.SetActive(false);
-        yield return new WaitForSeconds(1f);
-    }
+        Debug.Log("Hako Onna se ha escondido");
 
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(ReiniciarCartas());
+
+        yield return new WaitForSeconds(4f);
+        HakoEnTurno = false;
+        Player.JugadorEnMovimiento = false; // Mantener bloqueado hasta acción del nuevo jugador
+        AccionesJugador.Instance.ActivarBotones(); // El nuevo jugador ya puede elegir acción
+
+    }
     IEnumerator ReiniciarCartas()
     {
+        yield return new WaitForSeconds(1f);
         foreach (var carta in CartasEnJuego)
         {
             if (carta != null)
                 Destroy(carta);
         }
         CartasEnJuego.Clear();
-
         Indice = 0;
-        RuidoTotal = 0;
         Cartas.Clear();
         Cartas.AddRange(NumerosCompletos);
         TextoDecantidad.text = RuidoTotal.ToString();
-        Player.JugadorEnMovimiento = false;
+        Carta0.SetActive(true);
+        Carta1.SetActive(true);
+        Carta2.SetActive(true);
+        Carta3.SetActive(true);
+        Carta4.SetActive(true);
+        Carta5.SetActive(true);
+        
 
-        yield return new WaitForSeconds(1f);
     }
 }

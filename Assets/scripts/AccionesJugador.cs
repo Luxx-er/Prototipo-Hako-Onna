@@ -38,7 +38,6 @@ public class AccionesJugador : MonoBehaviour
            if (player.playerInTurn)
             {
                 Puertas.player = player.transform;
-                ItemsAleatorios.player = transform;
             }
         }
     }

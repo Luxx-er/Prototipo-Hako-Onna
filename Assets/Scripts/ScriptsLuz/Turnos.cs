@@ -32,6 +32,11 @@ public class Turnos : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Player[] Personajes = FindObjectsOfType<Player>();
+        foreach(Player personajes in Personajes)
+        {
+            playerList.Add(personajes);
+        }
         players = new Plyr[]
         {
                 new Plyr("Player 1"),
@@ -54,46 +59,11 @@ public class Turnos : MonoBehaviour
         playerList[currentPlayer].playerInTurn = true;
 
     }
-    public void ChooseActionInv()
-    {
-        players[currentPlayer].currentAction = Actions.INVESTIGAR;
-
-        ExecuteAction(players[currentPlayer]);
-    }
-
-    public void ChooseActionAva()
-    {
-        players[currentPlayer].currentAction = Actions.AVANZAR;
-
-        ExecuteAction(players[currentPlayer]);
-    }
-    public void ChooseActionPas()
-    {
-        players[currentPlayer].currentAction = Actions.PASAR;
-
-        ExecuteAction(players[currentPlayer]);
-    }
-    private void ExecuteAction(Plyr player)
-    {
-        switch (player.currentAction)
-        {
-            case Actions.INVESTIGAR:
-                Debug.Log(player.name + "investigo");
-                
-                break;
-            case Actions.AVANZAR:
-                Debug.Log(player.name + "avanzo");
-               
-                break;
-            case Actions.PASAR:
-                Debug.Log(player.name + "paso turno");
-                
-                break;
-        }
-    }
-
     public void NextTurn()
     {
+        if (currentPlayer == 4) {
+            currentPlayer = 0;
+        }
         currentPlayer = (currentPlayer + 1) % players.Length;
         Debug.Log("Turno de" + players[currentPlayer].name);
         TurnCamera();

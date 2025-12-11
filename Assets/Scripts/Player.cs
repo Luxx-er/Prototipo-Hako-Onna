@@ -18,7 +18,9 @@ public class Player : MonoBehaviour
     public static bool JugadorEnMovimiento = false; //Jugador en movimiento es falso, permite que el jugador se mueva despues de hacer alguna accion 
     public static bool Muevete = false;
     public static bool PuedeInteractuar = false;
+    public static bool Quieto = true;
     public bool playerInTurn;
+    public static bool JugadorVivo = true;
     public static Player Instance { get; private set; }
 
     private void Awake()
@@ -34,7 +36,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!HasInput && JugadorEnMovimiento && playerInTurn == true)
+        if (!HasInput && JugadorEnMovimiento && playerInTurn == true && JugadorVivo)
         {
             float h = Input.GetAxisRaw("Horizontal");
             float v = Input.GetAxisRaw("Vertical");
@@ -42,14 +44,17 @@ public class Player : MonoBehaviour
             if (Mathf.Abs(v) > 0.01f) //Moviniento en ejes, para checar que se mueva o en x o y, no vertical (Mathf.Abs: valor numerico)
             {
                 inputDir = new Vector2(0, Mathf.Sign(v)); //si es positivo regresa a 1 si es negativo regresa a -1
+                Quieto = false;
             }
             else if (Mathf.Abs(h) > 0.01f)
             {
                 inputDir = new Vector2(Mathf.Sign(h), 0);
+                Quieto = false;
             }
             else
             {
                 inputDir = Vector2.zero;  //los dos valores son 0 
+                Quieto = true;
             }
             
             if (inputDir != Vector2.zero) //detectar si hay un objeto enfrente

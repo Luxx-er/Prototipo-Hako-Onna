@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,26 +12,38 @@ public class Puertas : MonoBehaviour
     public enum Direccion { Norte, Sur, Este, Oeste} //Enum = Lista
     public Direccion direccion;
     public float DistanciaSalto = 7f;
+    public List<GameObject> Jugadores;
 
     private void Start()
     {
-        player = GameObject.FindAnyObjectByType<Player>().transform;
+        Player[] Personajes = FindObjectsOfType<Player>();
+        foreach (Player personajes in Personajes)
+        {
+            Jugadores.Add(personajes.gameObject);
+        }
     }
 
     private void Update()
     {
-        
+        Transform player = null;
+        foreach (GameObject obj in Jugadores)
+        {
+            Player Jugador = obj.GetComponent<Player>();
+            if (Jugador.playerInTurn)
+            {
+                player = obj.transform;
+                break;
+            }
+        }
         float distancia = Vector2.Distance(transform.position, player.position);
         jugadorEnRango = distancia < Radio;
 
-        if (jugadorEnRango && Input.GetKeyDown(KeyCode.E) && !SeMovio && SeMovera && Player.PuedeInteractuar)
+        if (jugadorEnRango && Input.GetKeyDown(KeyCode.E) && !SeMovio && SeMovera && Player.PuedeInteractuar && Player.Quieto == true)
         {
-            Player.JugadorEnMovimiento = false;
             Debug.Log("En rango de una puerta");
-            SeMovio = true;
             SeMovera = false;
             Vector3 nuevaPos = player.position;
-
+            Player.JugadorEnMovimiento = false;
             switch (direccion)
             {
                 case Direccion.Norte:
@@ -56,7 +67,7 @@ public class Puertas : MonoBehaviour
                     break;
             }
             player.position = nuevaPos;
-            Cambio();
+            StartCoroutine (Cambio());
         }
     } 
     IEnumerator Cambio()

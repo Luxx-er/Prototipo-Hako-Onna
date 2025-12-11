@@ -44,7 +44,6 @@ public class CajaFuerte : MonoBehaviour
         {
             correcta = true;
         }
-
         if (correcta)
         {
                 Debug.Log("Contraseña correcta");
