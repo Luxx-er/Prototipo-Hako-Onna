@@ -83,6 +83,9 @@ public class CajaFuerte : MonoBehaviour
 
         EliminarPrefabsDeCodigo(new int[] { C1, C2, C3 });
 
+        ControladorItems.Instance.CargarItemsExternos(PrefabsRestantes);
+
+
     }
 
     void EliminarPrefabsDeCodigo(int[] codigo)

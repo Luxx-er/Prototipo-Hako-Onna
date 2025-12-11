@@ -24,6 +24,6 @@ public class CantidadJugadores : MonoBehaviour
     }
     public void Siguiente()
     {
-        SceneManager.LoadScene("SeleccionPersonajes");
+        SceneManager.LoadScene("InterfazOdette");
     }
 }

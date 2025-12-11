@@ -4,28 +4,59 @@ using UnityEngine.UI;
 
 public class Inventario : MonoBehaviour
 {
-    [SerializeField] private Transform contenedorIconos; //Tiene el objeto que va a almacenar los items el INVENTARIO 
-    [SerializeField] private GameObject plantillaIcono;  //Casilla icono para clonarla 
+    [Header("Referencias UI")]
+    [SerializeField] private Transform contenedorIconos; // Contenedor GridLayoutGroup donde van los íconos
+    [SerializeField] private GameObject plantillaIcono;  // Prefab base del ícono
 
-    private List<GameObject> items = new List<GameObject>(); //Lista vacia donde se ponen los items que se obtengan
+    private List<GameObject> items = new List<GameObject>(); // Lista de ítems del jugador
 
-    public void AgregarItem(GameObject itemPrefab) 
+     // Agrega un ítem al inventario de este jugador.
+    public void AgregarItem(GameObject itemPrefab)
     {
-        items.Add(itemPrefab);
-        ItemData data = itemPrefab.GetComponent<ItemData>(); //Referencia el ItemData, todos los objetos que tengan el codigo ItemsData los referencia a la lista
-        if (data != null && data.icono != null) //Si si hay un item 
+        if (itemPrefab == null)
         {
-            GameObject nuevoIcono = Instantiate(plantillaIcono, contenedorIconos); //Se instancia la casilla con la escala de los valores del padding en el Grid Layout group
-            nuevoIcono.GetComponent<Image>().sprite = data.icono;
-            nuevoIcono.SetActive(true); //La hace visible
+            Debug.LogWarning("Se intentó agregar un item nulo al inventario de " + gameObject.name);
+            return;
         }
-        if (CajaFuerte.CajaAbierta) //Referencias el codigo de la caja fuerte, y la booleana estatica del mismo codigo, si esa booleana es verdadera 
+
+        items.Add(itemPrefab);
+        ItemData data = itemPrefab.GetComponent<ItemData>();
+
+        if (data != null && data.icono != null)
         {
-            GameObject nuevoIcono = Instantiate(plantillaIcono, contenedorIconos); // Se instancia la casilla con la escala de los valores del padding en el Grid Layout group
+            GameObject nuevoIcono = Instantiate(plantillaIcono, contenedorIconos);
+            nuevoIcono.GetComponent<Image>().sprite = data.icono;
+            nuevoIcono.SetActive(true);
+        }
+        if (CajaFuerte.CajaAbierta && data != null && data.icono != null)
+        {
+            GameObject nuevoIcono = Instantiate(plantillaIcono, contenedorIconos);
             nuevoIcono.GetComponent<Image>().sprite = data.icono;
             nuevoIcono.SetActive(true);
         }
 
-        Debug.Log(" Agregado al inventario: " + itemPrefab.name);
+        Debug.Log($" {gameObject.name} agregó al inventario: {itemPrefab.name}");
+    }
+
+    // Activa o desactiva la UI del inventario.
+    public void ActivarUI(bool activo)
+    {
+        if (contenedorIconos != null)
+            contenedorIconos.gameObject.SetActive(activo);
+    }
+
+    // Limpia el inventario visual (por si lo necesitas entre turnos).
+    public void LimpiarInventarioVisual()
+    {
+        foreach (Transform hijo in contenedorIconos)
+        {
+            Destroy(hijo.gameObject);
+        }
+    }
+    // Devuelve todos los ítems que este jugador tiene (por si los necesitas).
+    public List<GameObject> ObtenerItems()
+    {
+        return items;
     }
 }
+

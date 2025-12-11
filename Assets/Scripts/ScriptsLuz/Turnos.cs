@@ -29,47 +29,60 @@ public class Turnos : MonoBehaviour
         Instance = this;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         Player[] Personajes = FindObjectsOfType<Player>();
-        foreach(Player personajes in Personajes)
+        foreach (Player personajes in Personajes)
         {
             playerList.Add(personajes);
         }
+
         players = new Plyr[]
         {
-                new Plyr("Player 1"),
-                new Plyr("Player 2"),
-                new Plyr("Player 3"),
-                new Plyr("Player 4")
-
+            new Plyr("Player 1"),
+            new Plyr("Player 2"),
+            new Plyr("Player 3"),
+            new Plyr("Player 4")
         };
-        Debug.Log("Turno de" + players[currentPlayer].name);
-        TurnCamera();
 
+        Debug.Log("Turno de " + players[currentPlayer].name);
+        TurnCamera();
+        ActualizarInventariosUI();
     }
+
     private void TurnCamera()
     {
         foreach (Player p in playerList)
         {
             p.playerInTurn = false;
-
         }
         playerList[currentPlayer].playerInTurn = true;
-
     }
+
     public void NextTurn()
     {
-        if (currentPlayer == 4) {
+        currentPlayer++;
+        if (currentPlayer >= playerList.Count)
             currentPlayer = 0;
-        }
-        currentPlayer = (currentPlayer + 1) % players.Length;
-        Debug.Log("Turno de" + players[currentPlayer].name);
+
         TurnCamera();
+        ActualizarInventariosUI();
         AccionesJugador.Instance.ActivarBotones();
+
+        Debug.Log("Turno de " + players[currentPlayer].name);
     }
-        
 
-
+    public void ActualizarInventariosUI()
+    {
+        foreach (Player p in playerList)
+        {
+            Inventario inv = p.GetComponent<Inventario>();
+            if (inv != null)
+            {
+                // Mostrar solo el inventario del jugador en turno
+                bool activo = p.playerInTurn;
+                inv.ActivarUI(activo);
+            }
+        }
+    }
 }
