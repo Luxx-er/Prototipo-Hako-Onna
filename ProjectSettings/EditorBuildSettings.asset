@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MenuPrincipal.unity
     guid: cb580d12afd8f724398a486a7cc5671d
   - enabled: 1
-    path: Assets/Scenes/CantJugadores.unity
+    path: Assets/Scenes/CantJugadoresJose.unity
     guid: 3ecd2a6ef687fe14d9972f50fa3fafa6
   - enabled: 1
     path: Assets/Scenes/SeleccionPersonajes.unity
