@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/SeleccionPersonajes.unity
     guid: 907b4b198a11f9e4bbee591a2f857d34
   - enabled: 1
-    path: Assets/Scenes/InterfazOdette.unity
+    path: Assets/Scenes/InterfazOdette2.unity
     guid: 08cf0c300a1a3d94595f5d0519222448
   - enabled: 1
     path: Assets/Scenes/CajaFuerte.unity
