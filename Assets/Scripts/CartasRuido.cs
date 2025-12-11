@@ -1,18 +1,21 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
-using static UnityEditor.Progress;
+using UnityEngine.UI;
+
 
 public class CartasRuido : MonoBehaviour
-{ 
+{
 
     [SerializeField] private TextMeshProUGUI TextoDecantidad;
     [SerializeField] GameObject CanvasRuido;
-    List<int> Cartas = new List<int> { 0, 1, 2, 3, 4, 5};
+    List<int> Cartas = new List<int> { 0, 1, 2, 3, 4, 5 };
     List<int> NumerosCompletos = new List<int> { 0, 1, 2, 3, 4, 5 };
     int RuidoTotal = 0;
+
 
 
     private void Update()
@@ -22,6 +25,10 @@ public class CartasRuido : MonoBehaviour
             StartCoroutine(ActivaHakoOnna());
         }
     }
+
+
+
+
     public void SacarCarta()
     {
         if (RuidoTotal <= 10)
@@ -45,9 +52,6 @@ public class CartasRuido : MonoBehaviour
 
         }
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 }
+// Start is called before the first frame update
+
