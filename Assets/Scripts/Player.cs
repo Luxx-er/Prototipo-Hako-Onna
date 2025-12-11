@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
     public static bool JugadorVivo = true;
     public static Player Instance { get; private set; }
 
+    [SerializeField] private Animator animator;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
