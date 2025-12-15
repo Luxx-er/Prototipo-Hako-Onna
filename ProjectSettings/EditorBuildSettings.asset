@@ -14,10 +14,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SeleccionPersonajes.unity
     guid: 907b4b198a11f9e4bbee591a2f857d34
-  - enabled: 1
-    path: Assets/Scenes/InterfazPrincipal.unity
+  - enabled: 0
+    path: Assets/Scenes/InterfazOdette.unity
     guid: 08cf0c300a1a3d94595f5d0519222448
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/CajaFuerte.unity
     guid: a5891b6d160e2e04f8da70159b6b99b0
+  - enabled: 1
+    path: Assets/Scenes/InterfazPrincipal.unity
+    guid: 7392d623921be8e43adebbd1afded6f0
   m_configObjects: {}

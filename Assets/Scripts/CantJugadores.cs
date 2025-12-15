@@ -11,11 +11,13 @@ public class CantidadJugadores : MonoBehaviour
     [SerializeField] GameObject Jugador3;
     [SerializeField] GameObject Jugador4;
     int Cant = 2;
+    public static int CantFinal;
     public void MasJugadores()
     {
         if (Cant < 4)
         {
             Cant++; Cantidad.text = Cant.ToString();
+            
         }
     }
     public void MenosJugadores()
@@ -23,6 +25,7 @@ public class CantidadJugadores : MonoBehaviour
         if (Cant > 2)
         {
             Cant--; Cantidad.text = Cant.ToString();
+            
         }
     }
 
@@ -55,5 +58,7 @@ public class CantidadJugadores : MonoBehaviour
     public void Siguiente()
     {
         SceneManager.LoadScene("InterfazPrincipal");
+        CantFinal = Cant;
+        Debug.Log("cantidad es igual a " +  CantFinal);
     }
 }

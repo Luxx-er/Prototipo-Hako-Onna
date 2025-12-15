@@ -6554,6 +6554,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86df04415ed2e504eaf33e78fdba046d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cantJugadores: 0
+  Player1: {fileID: 365381458}
+  Player2: {fileID: 895275546}
+  Player3: {fileID: 473652878}
+  Player4: {fileID: 672912415}
 --- !u!114 &685224971
 MonoBehaviour:
   m_ObjectHideFlags: 0
