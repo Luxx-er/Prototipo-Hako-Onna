@@ -43,7 +43,6 @@ public class AccionesJugador : MonoBehaviour
     }
     public void MoveOrInvestigate()
     {
-
         Debug.Log("Panel de Cartas");
         JugadorInvestiga = true;
         ItemsAleatorios.Investiga = true; //booleana referenciando el codigo de ItemsAleatorios
@@ -53,7 +52,6 @@ public class AccionesJugador : MonoBehaviour
     }
     public void CambiaDeCuarto()
     {
-
         Debug.Log("Panel de Cartas");
         JugadorSeMueve = true;
         Puertas.SeMovera = true;  //booleana referenciando el codigo de Puertas

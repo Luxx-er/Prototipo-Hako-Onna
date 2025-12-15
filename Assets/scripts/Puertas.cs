@@ -38,7 +38,7 @@ public class Puertas : MonoBehaviour
         float distancia = Vector2.Distance(transform.position, player.position);
         jugadorEnRango = distancia < Radio;
 
-        if (jugadorEnRango && Input.GetKeyDown(KeyCode.E) && !SeMovio && SeMovera && Player.PuedeInteractuar && Player.Quieto == true)
+        if (jugadorEnRango && Input.GetKeyDown(KeyCode.E) && !SeMovio && SeMovera && Player.PuedeInteractuar && Player.Quieto == true && CartasRuido.YaEligio)
         {
             Debug.Log("En rango de una puerta");
             SeMovera = false;
@@ -68,6 +68,7 @@ public class Puertas : MonoBehaviour
             }
             player.position = nuevaPos;
             StartCoroutine (Cambio());
+            CartasRuido.YaEligio = false;
         }
     } 
     IEnumerator Cambio()

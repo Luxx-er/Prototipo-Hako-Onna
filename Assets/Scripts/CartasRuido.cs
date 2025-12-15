@@ -28,6 +28,7 @@ public class CartasRuido : MonoBehaviour
     private int RuidoTotal = 0;
     private int Indice = 0;
     private int CartaSacada;
+    public static bool YaEligio = false;
 
     public static bool HakoEnTurno = false;
     private bool hakoActivada = false;
@@ -81,6 +82,7 @@ public class CartasRuido : MonoBehaviour
             Player.JugadorEnMovimiento = true;
             Mazo.blocksRaycasts = true;
         }
+        YaEligio = true;
     }
 
     void AcumularCartas()
@@ -136,7 +138,8 @@ public class CartasRuido : MonoBehaviour
 
         HakoEnTurno = false;
         hakoActivada = false; 
-        Player.JugadorEnMovimiento = false; 
+        Player.JugadorEnMovimiento = false;
+        YaEligio = false;
         AccionesJugador.Instance.ActivarBotones();
         CanvasHako.SetActive(false);
         Debug.Log("Hako Onna terminó su efecto.");
@@ -164,5 +167,8 @@ public class CartasRuido : MonoBehaviour
         Carta3.SetActive(true);
         Carta4.SetActive(true);
         Carta5.SetActive(true);
+
+        YaEligio = false;
     }
+
 }

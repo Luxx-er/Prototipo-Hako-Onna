@@ -98,3 +98,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icono: {fileID: 21300000, guid: 45eec9fc810681c4eaad9de70374d306, type: 3}
+  tipoEspecial: 5
