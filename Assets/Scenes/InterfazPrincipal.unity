@@ -525,7 +525,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &46775706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5782,9 +5782,9 @@ MonoBehaviour:
   SaltasteTurno: {fileID: 0}
   PanelTurno: {fileID: 0}
   Turno: {fileID: 0}
-  SeMueve: {fileID: 0}
-  PasaDeTurno: {fileID: 0}
-  Investiga: {fileID: 0}
+  SeMueve: {fileID: 1217658536}
+  PasaDeTurno: {fileID: 469938799}
+  Investiga: {fileID: 707487977}
   Jugadores: []
 --- !u!4 &549681791
 Transform:
@@ -8836,7 +8836,7 @@ SpriteRenderer:
   m_Size: {x: 6.4, y: 3.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &885680699

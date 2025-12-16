@@ -26,7 +26,11 @@ public class AccionesJugador : MonoBehaviour
         Instance = this;
     }
     private void Update()
-    { 
+    {
+        if(RoomsManager.ItemsInRoom && ItemsAleatorios.Instance.Obtenido)
+        {
+            Investiga.interactable = false;
+        }
     }
     private void Start()
     {

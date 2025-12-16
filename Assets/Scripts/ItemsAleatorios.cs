@@ -11,7 +11,13 @@ public class ItemsAleatorios : MonoBehaviour
     public List<GameObject> Jugadores;
 
     public Animator animator;
-    
+    public static ItemsAleatorios Instance {  get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
 
