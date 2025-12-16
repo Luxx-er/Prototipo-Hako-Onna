@@ -69,8 +69,23 @@ public class Player : MonoBehaviour
                     targetPos = target;
                     HasInput = true; //Ya se puede mover
 
-                    //Animator goes here
-
+                    //Animator va aqui
+                    if (animator)
+                    {
+                        animator.SetFloat("MoveX", inputDir.x);
+                        animator.SetFloat("MoveY", inputDir.y); //InputDir Cheacar que estoy presionando 
+                        animator.SetBool("IsMoving", true); //Se esta moviendo si o no
+                    }
+                }
+                else
+                {
+                    //animation idle goes here
+                    if (animator)
+                    {
+                        animator.SetFloat("MoveX", inputDir.x);
+                        animator.SetFloat("MoveY", inputDir.y); //InputDir Cheacar que estoy presionando 
+                        animator.SetBool("IsMoving", false); //Se esta moviendo si o no
+                    }
                 }
             }
 
@@ -89,8 +104,12 @@ private void FixedUpdate()
             {
                 rb.MovePosition(targetPos);
                 HasInput = false; //Te dejas de mover 
-            }
 
+                if (animator)
+                {
+                    animator.SetBool("IsMoving", false);
+                }
+            }
         }
     }
 }

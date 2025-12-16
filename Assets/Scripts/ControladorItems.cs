@@ -63,48 +63,48 @@ public class ControladorItems : MonoBehaviour
     {
         ItemsAleatorios[] todasLasCasillas = FindObjectsOfType<ItemsAleatorios>();
         List<ItemsAleatorios> disponibles = new List<ItemsAleatorios>();
+        // Limpia marcas de Hako Onna
+        foreach (ItemsAleatorios casilla in todasLasCasillas)
+            casilla.HakoOnnaAqui = false;
 
         foreach (ItemsAleatorios casilla in todasLasCasillas)
         {
-            // Si la casilla ya fue obtenida, la "reseteamos"
+            // Si está bloqueada permanentemente (ítem especial), no tocarla
+            if (casilla.CasillaBloqueadaPermanente)
+                continue;
+
+            // Reiniciar casillas normales o Tachesote
             if (casilla.Obtenido)
             {
                 casilla.Obtenido = false;
-                casilla.HakoOnnaAqui = false;
                 ItemsAleatorios.Investiga = false;
 
-                //Eliminar taches (instancias de prefab Tache)
                 foreach (Transform hijo in casilla.transform)
                 {
-                    if (hijo.name.Contains("X"))
+                    if (hijo.name.Contains("X")) // eliminar taches
                         Destroy(hijo.gameObject);
                 }
             }
-            else
-            {
+
+            if (!casilla.Obtenido)
                 disponibles.Add(casilla);
-            }
         }
 
-        //Elegir una casilla para esconder a Hako Onna
-        ItemsAleatorios casillaHako = null;
-
+        //  Hako Onna se esconde en una casilla disponible
         if (disponibles.Count > 0)
         {
-            // Si hay casillas sin abrir, usa una de ellas
-            casillaHako = disponibles[Random.Range(0, disponibles.Count)];
+            ItemsAleatorios nuevaCasilla = disponibles[Random.Range(0, disponibles.Count)];
+            nuevaCasilla.HakoOnnaAqui = true;
+            Debug.Log("Hako Onna se escondió");
         }
         else
         {
-            // Si todas estaban abiertas, elige una aleatoria de todas las casillas
-            casillaHako = todasLasCasillas[Random.Range(0, todasLasCasillas.Length)];
+            Debug.LogWarning("No hay casillas disponibles para esconder a Hako Onna.");
         }
 
-        casillaHako.HakoOnnaAqui = true;
-       
-        Debug.Log("Casillas reiniciadas y taches eliminados.");
-        Debug.Log("Hako Onna se escondió");
+        Debug.Log("Casillas normales reiniciadas correctamente.");
     }
+
     public void CargarItemsExternos(List<GameObject> items)
     {
         Items.AddRange(items);

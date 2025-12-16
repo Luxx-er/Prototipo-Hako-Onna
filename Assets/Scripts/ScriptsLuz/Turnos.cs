@@ -8,7 +8,6 @@ public class Plyr
 {
     public string name;
     public Actions currentAction;
-
     public Plyr(string name)
     {
         this.name = name;
@@ -68,10 +67,9 @@ public class Turnos : MonoBehaviour
         TurnCamera();
         ActualizarInventariosUI();
         AccionesJugador.Instance.ActivarBotones();
-
+        CartasRuido.YaEligio = false;
         Debug.Log("Turno de " + players[currentPlayer].name);
     }
-
     public void ActualizarInventariosUI()
     {
         foreach (Player p in playerList)
