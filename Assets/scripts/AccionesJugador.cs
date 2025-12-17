@@ -16,7 +16,7 @@ public class AccionesJugador : MonoBehaviour
     [SerializeField] public Button SeMueve;
     [SerializeField] public Button PasaDeTurno;
     [SerializeField] public Button Investiga;
-
+    private int cantidadAnterior = -1;
     [SerializeField] private List<GameObject> Jugadores = new List<GameObject>();
     
     public static AccionesJugador Instance { get; private set; }
@@ -25,9 +25,13 @@ public class AccionesJugador : MonoBehaviour
     {
         Instance = this;
     }
+    
+
     private void Update()
-    { 
+    {
+       
     }
+
     private void Start()
     {
         Player[] jugadores  = FindObjectsOfType<Player>();
@@ -72,7 +76,22 @@ public class AccionesJugador : MonoBehaviour
     public void ActivarBotones()
     {
         Investiga.interactable = true;
-        PasaDeTurno.interactable = true;
-        SeMueve.interactable = true;           
+        SeMueve.interactable = true;
+
+        Jugadores.RemoveAll(j => j == null);
+
+        int cantidadActual = Jugadores.Count;
+        if (cantidadActual != cantidadAnterior)
+        {
+            cantidadAnterior = cantidadActual;
+        }
+        if (cantidadActual <= 1)
+        {
+            PasaDeTurno.interactable = false;
+            Debug.Log("Solo queda un jugador, el botón se desactiva.");
+        }else
+        {
+            PasaDeTurno.interactable = true;
+        }
     }
 }

@@ -9,11 +9,14 @@ public class ControladorItems : MonoBehaviour
     public List<GameObject> Items;
     public GameObject Tache;
     public GameObject Muerte;
+    public GameObject MuerteHakobito;
     public GameObject Llaves;
 
     [Header("Debilidades de Hako Onna")]
-    public List<GameObject> Debilidades = new List<GameObject>(); // Las 3 posibles
+    public List<GameObject> Debilidades = new List<GameObject>(); // Las 3 posibles debilidades
     public GameObject DebilidadDeHako; // La verdadera debilidad de esta partida
+    private List<ItemsAleatorios> hakobitosActivos = new List<ItemsAleatorios>();
+
 
     private void Start()
     {
@@ -63,17 +66,15 @@ public class ControladorItems : MonoBehaviour
     {
         ItemsAleatorios[] todasLasCasillas = FindObjectsOfType<ItemsAleatorios>();
         List<ItemsAleatorios> disponibles = new List<ItemsAleatorios>();
-        // Limpia marcas de Hako Onna
+
         foreach (ItemsAleatorios casilla in todasLasCasillas)
             casilla.HakoOnnaAqui = false;
 
         foreach (ItemsAleatorios casilla in todasLasCasillas)
         {
-            // Si está bloqueada permanentemente (ítem especial), no tocarla
             if (casilla.CasillaBloqueadaPermanente)
                 continue;
 
-            // Reiniciar casillas normales o Tachesote
             if (casilla.Obtenido)
             {
                 casilla.Obtenido = false;
@@ -85,24 +86,88 @@ public class ControladorItems : MonoBehaviour
                         Destroy(hijo.gameObject);
                 }
             }
-
-            if (!casilla.Obtenido)
+            if (!casilla.Obtenido && !casilla.HakobitoAqui)
                 disponibles.Add(casilla);
         }
-
-        //  Hako Onna se esconde en una casilla disponible
         if (disponibles.Count > 0)
         {
             ItemsAleatorios nuevaCasilla = disponibles[Random.Range(0, disponibles.Count)];
             nuevaCasilla.HakoOnnaAqui = true;
-            Debug.Log("Hako Onna se escondió");
+            Debug.Log("Hako Onna se escondió en una nueva casilla.");
+        }
+        MoverHakobitos(todasLasCasillas);
+
+        Debug.Log("Casillas normales reiniciadas correctamente.");
+    }
+
+
+
+    public void EsconderHakobito()
+    {
+        ItemsAleatorios[] casillas = FindObjectsOfType<ItemsAleatorios>();
+        List<ItemsAleatorios> disponibles = new List<ItemsAleatorios>();
+
+        foreach (ItemsAleatorios c in casillas)
+        {
+            if (!c.Obtenido && !c.CasillaBloqueadaPermanente && !c.HakoOnnaAqui && !c.HakobitoAqui)
+            {
+                disponibles.Add(c);
+            }
+        }
+
+        if (disponibles.Count > 0)
+        {
+            ItemsAleatorios casillaSeleccionada = disponibles[Random.Range(0, disponibles.Count)];
+            casillaSeleccionada.HakobitoAqui = true;
+            hakobitosActivos.Add(casillaSeleccionada);
+            Debug.Log("Un Hakobito se ha escondido");
         }
         else
         {
-            Debug.LogWarning("No hay casillas disponibles para esconder a Hako Onna.");
+            Debug.LogWarning("No hay casillas disponibles para esconder un Hakobito.");
+        }
+    }
+
+
+    public void MoverHakobitos(ItemsAleatorios[] todasLasCasillas)
+    {
+        hakobitosActivos.Clear();
+        List<ItemsAleatorios> origenes = new List<ItemsAleatorios>();
+        foreach (ItemsAleatorios c in todasLasCasillas)
+        {
+            if (c.HakobitoAqui)
+                origenes.Add(c);
         }
 
-        Debug.Log("Casillas normales reiniciadas correctamente.");
+        if (origenes.Count == 0)
+        {
+            Debug.Log("No hay Hakobitos activos en el mapa.");
+            return;
+        }
+        foreach (ItemsAleatorios c in origenes)
+            c.HakobitoAqui = false;
+        List<ItemsAleatorios> libres = new List<ItemsAleatorios>();
+        foreach (ItemsAleatorios c in todasLasCasillas)
+        {
+            if (!c.Obtenido && !c.CasillaBloqueadaPermanente && !c.HakoOnnaAqui && !c.HakobitoAqui)
+                libres.Add(c);
+        }
+
+        if (libres.Count == 0)
+        {
+            Debug.LogWarning("No hay casillas disponibles para mover a los Hakobitos.");
+            return;
+        }
+        foreach (ItemsAleatorios c in origenes)
+        {
+            if (libres.Count == 0) break;
+            ItemsAleatorios destino = libres[Random.Range(0, libres.Count)];
+            destino.HakobitoAqui = true;
+            hakobitosActivos.Add(destino);
+            libres.Remove(destino);
+
+            Debug.Log($"Un Hakobito se escondió");
+        }
     }
 
     public void CargarItemsExternos(List<GameObject> items)

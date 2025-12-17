@@ -25,52 +25,49 @@ public class Puertas : MonoBehaviour
 
     private void Update()
     {
+        //Limpia referencias destruidas (jugadores muertos)
+        Jugadores.RemoveAll(obj => obj == null);
+
+        //Buscar jugador actual en turno
         Transform player = null;
         foreach (GameObject obj in Jugadores)
         {
+            if (obj == null) continue;
+
             Player Jugador = obj.GetComponent<Player>();
-            if (Jugador.playerInTurn)
+            if (Jugador != null && Jugador.playerInTurn)
             {
                 player = obj.transform;
                 break;
             }
         }
+        if (player == null) return;
         float distancia = Vector2.Distance(transform.position, player.position);
         jugadorEnRango = distancia < Radio;
 
-        if (jugadorEnRango && Input.GetKeyDown(KeyCode.E) && !SeMovio && SeMovera && Player.PuedeInteractuar && Player.Quieto == true && CartasRuido.YaEligio)
+        if (jugadorEnRango && Input.GetKeyDown(KeyCode.E) && !SeMovio &&
+            SeMovera && Player.PuedeInteractuar && Player.Quieto && CartasRuido.YaEligio)
         {
             Debug.Log("En rango de una puerta");
             SeMovera = false;
-            Vector3 nuevaPos = player.position;
             Player.JugadorEnMovimiento = false;
+
+            Vector3 nuevaPos = player.position;
             switch (direccion)
             {
-                case Direccion.Norte:
-                    nuevaPos.y += DistanciaSalto;
-                    Debug.Log("Puerta Norte usada");
-                    break;
-
-                case Direccion.Sur:
-                    nuevaPos.y -= DistanciaSalto;
-                    Debug.Log("Puerta Sur usada");
-                    break;
-
-                case Direccion.Este:
-                    nuevaPos.x += DistanciaSalto;
-                    Debug.Log("Puerta Este usada");
-                    break;
-
-                case Direccion.Oeste:
-                    nuevaPos.x -= DistanciaSalto;
-                    Debug.Log("Puerta Oeste usada");
-                    break;
+                case Direccion.Norte: nuevaPos.y += DistanciaSalto; Debug.Log("Puerta Norte usada"); break;
+                case Direccion.Sur: nuevaPos.y -= DistanciaSalto; Debug.Log("Puerta Sur usada"); break;
+                case Direccion.Este: nuevaPos.x += DistanciaSalto; Debug.Log("Puerta Este usada"); break;
+                case Direccion.Oeste: nuevaPos.x -= DistanciaSalto; Debug.Log("Puerta Oeste usada"); break;
             }
+
             player.position = nuevaPos;
-            StartCoroutine (Cambio());
+
+            StartCoroutine(Cambio());
             CartasRuido.YaEligio = false;
         }
-    } 
+    }
+
     IEnumerator Cambio()
     {
         yield return new WaitForSeconds(2f);

@@ -10,19 +10,21 @@ public class CajaFuerte : MonoBehaviour
     [SerializeField] TextMeshProUGUI Digito1; //Textos que se actualizan 
     [SerializeField] TextMeshProUGUI Digito2;
     [SerializeField] TextMeshProUGUI Digito3;
+    [SerializeField] TextMeshProUGUI Textito;
 
     [Header("Prefabs")]
     [SerializeField] private List<GameObject> PrefabsDisponibles; //Numeros de la caja fuerte
     public List<GameObject> PrefabsRestantes = new List<GameObject>(); //Lista vacia mete los numeros que sobran para encontrarlos en el mapa
+    private bool LlavesConseguidas = false;
 
     int D1, D2, D3; //D= Digito
     int C1, C2, C3; //C= Codigo
-    bool correcta = false;
 
     List<int> Digitos = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     List<int> DigitosCompletos = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }; //Cuando recargas la escena, salga un codigo aleatorio
 
     public static bool CajaAbierta = false; //Booleana falsa para cuando desbloques la caja fuerte te de el item y se vuelva verdadera
+    [SerializeField] private GameObject CanvasCajaFuerte;
     void Start()
     {
         CodigoRandom(); //Cuando inica sale el codigo random 
@@ -36,31 +38,66 @@ public class CajaFuerte : MonoBehaviour
 
     public void Abrir()
     {
-        GameObject Llaves = ControladorItems.Instance.Llaves;  //Referenciando al codigo ControladorItems 
+       StartCoroutine(AbrirCaja());
+    }
+    IEnumerator AbrirCaja()
+    {
+        GameObject Llaves = ControladorItems.Instance.Llaves;
         int[] entrada = { D1, D2, D3 };
         int[] codigo = { C1, C2, C3 };
 
-        if (entrada.OrderBy(x => x).SequenceEqual(codigo.OrderBy(x => x))) //Acomoda los numeros de menor a mayor, los compara y aunque 
+        bool correcta = entrada.OrderBy(x => x).SequenceEqual(codigo.OrderBy(x => x));
+
+        if (correcta && !LlavesConseguidas)
         {
-            correcta = true;
-        }
-        if (correcta)
-        {
-                Debug.Log("Contraseña correcta");
-                Instantiate(Llaves, transform.position, Quaternion.identity); //Instancia las llaves y cambia las escalas para ponerlas en el inventario 
-                Inventario inventario = FindObjectOfType<Inventario>(); //Referencias al codigo del inventario 
+            Textito.text = "Clave correcta. Llaves conseguidas.";
+            LlavesConseguidas = true;
+
+            // Buscar al jugador actual
+            Player jugadorActual = null;
+            foreach (Player p in FindObjectsOfType<Player>())
+            {
+                if (p.playerInTurn)
+                {
+                    jugadorActual = p;
+                    break;
+                }
+            }
+
+            // Agregar llaves al inventario
+            if (jugadorActual != null)
+            {
+                Inventario inventario = jugadorActual.GetComponent<Inventario>();
                 if (inventario != null)
                 {
-                    inventario.AgregarItem(Llaves); //Referencias la funcion del codigo del inventario y agregas las llaves
+                    inventario.AgregarItem(Llaves);
+                    Debug.Log($"{jugadorActual.name} obtuvo las Llaves.");
                 }
+            }
 
-                Debug.Log("Has conseguido las " + Llaves.name);
+            CanvasCajaFuerte.SetActive(false);
+            yield return new WaitForSeconds(2f);
+        }
+        else if (correcta && LlavesConseguidas)
+        {
+            Textito.text = "La caja fuerte ya está vacía.";
+            CanvasCajaFuerte.SetActive(false);
+            yield return new WaitForSeconds(2f);
         }
         else
         {
-            Debug.Log("Contraseña incorrecta");
+            Textito.text = "Clave incorrecta... pierdes turno.";
+            CanvasCajaFuerte.SetActive(false);
+            yield return new WaitForSeconds(2f);
         }
+        Player.JugadorEnMovimiento = false;
+        Player.PuedeInteractuar = false;
+        ItemsAleatorios.Investiga = false;
+        CartasRuido.YaEligio = false;
+
+        Turnos.Instance.NextTurn();
     }
+
 
     void CodigoRandom()
     {

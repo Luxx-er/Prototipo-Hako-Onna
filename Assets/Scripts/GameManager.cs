@@ -16,17 +16,13 @@ public class GameManager : MonoBehaviour
         switch(cantJugadores)
         {
             case 2:
-                Player3.SetActive(false);
-                Player4.SetActive(false);
+                Destroy(Player3);
+                Destroy(Player4);
                 break;
                 case 3:
-                Player4.SetActive(false);
+                Destroy(Player4);
                 break;
         }
-    }
-    public void Inventario()
-    {
-
     }
    
 }

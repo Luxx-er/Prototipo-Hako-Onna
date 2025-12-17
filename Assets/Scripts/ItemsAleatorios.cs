@@ -1,25 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using static ItemData;
 
 public class ItemsAleatorios : MonoBehaviour
 {
+    [Header("Configuración general")]
     public float Radio = 1.3f;
-    public bool Obtenido = false;   // Debe ser público para poder reiniciarse
+    public bool Obtenido = false;
     public static bool Investiga = false;
+
+    [Header("Estado de la casilla")]
     public bool HakoOnnaAqui = false;
+    public bool HakobitoAqui = false;
+    public bool CasillaBloqueadaPermanente = false;
+
+    [Header("Jugadores y control")]
     public List<GameObject> Jugadores;
     public Animator animator;
-    public bool CasillaBloqueadaPermanente = false; // Para ítems especiales
+
+    [Header("Canvas")]
+    [SerializeField] private GameObject CanvasCajaFuerte;
+    [SerializeField] private GameObject CanvasVictoria;
+    [SerializeField] private GameObject CanvasDerrota;
+    [SerializeField] private TextMeshProUGUI Textito;
+
+    private static bool enEvento = false;
 
     private void Start()
     {
-
-        Player[] Personajes = FindObjectsOfType<Player>();
-        foreach (Player personajes in Personajes)
+        Player[] personajes = FindObjectsOfType<Player>();
+        foreach (Player p in personajes)
         {
-            Jugadores.Add(personajes.gameObject);
+            Jugadores.Add(p.gameObject);
         }
     }
 
@@ -28,46 +42,62 @@ public class ItemsAleatorios : MonoBehaviour
         if (!Player.PuedeInteractuar || !CartasRuido.YaEligio)
             return;
 
-        // Encontrar jugador actual en turno
+        Jugadores.RemoveAll(obj => obj == null);
+
         Transform player = null;
         foreach (GameObject obj in Jugadores)
         {
-            Player Jugador = obj.GetComponent<Player>();
-            if (Jugador.playerInTurn)
+            if (obj == null) continue;
+            Player jugador = obj.GetComponent<Player>();
+            if (jugador != null && jugador.playerInTurn)
             {
                 player = obj.transform;
                 break;
             }
         }
 
-        if (player == null) return;
+        if (player == null)
+            return;
+
         float distancia = Vector2.Distance(transform.position, player.position);
         bool jugadorEnRango = distancia < Radio;
 
-        if (jugadorEnRango && Input.GetKeyDown(KeyCode.E) && !Obtenido && Investiga)
+        if (jugadorEnRango && Input.GetKeyDown(KeyCode.E) && Investiga && !enEvento)
         {
-            if (!HakoOnnaAqui)
-                StartCoroutine(DarItem());
-            else
-                StartCoroutine(InvocarHakoOnna());
+            bool hizoAccion = false;
 
-            CartasRuido.YaEligio = false; // consume la carta usada
-            return;
+            if (!Obtenido)
+            {
+                if (HakoOnnaAqui)
+                {
+                    StartCoroutine(InvocarHakoOnna());
+                    hizoAccion = true;
+                }
+                else if (HakobitoAqui)
+                {
+                    StartCoroutine(InvocarHakobito());
+                    hizoAccion = true;
+                }
+                else
+                {
+                    StartCoroutine(DarItem());
+                    hizoAccion = true;
+                }
+            }
+            else if (CasillaBloqueadaPermanente)
+            {
+                ItemData data = GetComponentInChildren<ItemData>();
+                if (data != null)
+                {
+                    ActivarItemEspecial(data);
+                    hizoAccion = true;
+                }
+            }
+            if (hizoAccion)
+                CartasRuido.YaEligio = false;
         }
 
-        // Interacción con ítem especial (solo si ya eligió carta)
-        if (jugadorEnRango && Input.GetKeyDown(KeyCode.E) && Obtenido && Investiga && CasillaBloqueadaPermanente)
-        {
-            ItemData data = GetComponentInChildren<ItemData>();
-            if (data != null)
-                ActivarItemEspecial(data);
-
-            CartasRuido.YaEligio = false;
-            return;
-        }
     }
-
-
 
     IEnumerator DarItem()
     {
@@ -75,110 +105,253 @@ public class ItemsAleatorios : MonoBehaviour
         GameObject Tache = ControladorItems.Instance.Tache;
         Player.JugadorEnMovimiento = false;
 
-        if (prefabItem == null) yield break;
+        if (prefabItem == null)
+        {
+            enEvento = false;
+            yield break;
+        }
 
-        // Instancia temporal del ítem en el mapa
-        GameObject item = Instantiate(prefabItem, transform.position, Quaternion.identity);
-        item.transform.SetParent(transform);
+        GameObject item = Instantiate(prefabItem, transform.position, Quaternion.identity, transform);
         item.transform.localPosition = Vector3.zero;
+        item.transform.localScale = Vector3.one;
 
         ItemData data = item.GetComponent<ItemData>();
-
         Investiga = false;
+
         Debug.Log($"Has encontrado: {prefabItem.name}");
         yield return new WaitForSeconds(2f);
 
-        // Buscar el jugador actual
-        Player jugadorActual = null;
-        foreach (Player p in FindObjectsOfType<Player>())
+        Player jugadorActual = GetJugadorActual();
+        if (jugadorActual == null)
         {
-            if (p.playerInTurn)
-            {
-                jugadorActual = p;
-                break;
-            }
+            enEvento = false;
+            yield break;
         }
 
-        if (jugadorActual == null) yield break;
-        Inventario inventarioJugador = jugadorActual.GetComponent<Inventario>();
-        if (inventarioJugador == null) yield break;
+        Inventario inventario = jugadorActual.GetComponent<Inventario>();
+        if (inventario == null)
+        {
+            enEvento = false;
+            yield break;
+        }
 
-        // Ítem normal se agrega al inventario
         if (data != null && data.tipoEspecial == TipoEspecial.Ninguno && !data.Tachesote)
         {
-            inventarioJugador.AgregarItem(prefabItem);
-            Debug.Log($"{jugadorActual.name} obtuvo {prefabItem.name}");
-
+            inventario.AgregarItem(prefabItem);
             Destroy(item);
-            GameObject tache = Instantiate(Tache, transform.position, Quaternion.identity);
-            tache.transform.SetParent(transform);
-            tache.transform.localPosition = Vector3.zero;
-
+            CrearTache(Tache);
             Obtenido = true;
             CasillaBloqueadaPermanente = false;
-            Debug.Log("Ítem normal agregado al inventario y reemplazado por tache.");
         }
-        // Tachesote no se agrega, pero se reemplaza y se reinicia
         else if (data != null && data.Tachesote)
         {
             Destroy(item);
-            GameObject tache = Instantiate(Tache, transform.position, Quaternion.identity);
-            tache.transform.SetParent(transform);
-            tache.transform.localPosition = Vector3.zero;
-
+            CrearTache(Tache);
             Obtenido = true;
             CasillaBloqueadaPermanente = false;
-            Debug.Log("Tachesote detectado: no se agrega al inventario, pero la casilla puede reiniciarse.");
+            Debug.Log("Tachesote detectado. Casilla reiniciable.");
         }
         else
         {
-            Debug.Log($"Ítem especial detectado: {prefabItem.name}. Se mantiene en el mapa.");
+            Debug.Log($"Ítem especial: {prefabItem.name}. Se mantiene en el mapa.");
             Obtenido = true;
-            CasillaBloqueadaPermanente = true; // no se reinicia
+            CasillaBloqueadaPermanente = true;
         }
 
         yield return new WaitForSeconds(3f);
         Turnos.Instance.NextTurn();
+        enEvento = false;
     }
-
 
     void ActivarItemEspecial(ItemData data)
     {
+        Player jugadorActual = GetJugadorActual();
+        if (jugadorActual == null) return;
+
+        Inventario inventario = jugadorActual.GetComponent<Inventario>();
+        if (inventario == null) return;
+
         switch (data.tipoEspecial)
         {
             case TipoEspecial.CajaFuerte:
+                CanvasCajaFuerte.SetActive(true);
+                Player.JugadorEnMovimiento = false;
                 Debug.Log("Se activó la Caja Fuerte");
                 break;
 
             case TipoEspecial.Sombrero:
-                Debug.Log("El sombrero revela un secreto...");
-                // Aquí puedes activar otro evento o animación
+                StartCoroutine(VictoriaConSombrero(inventario));
                 break;
 
             case TipoEspecial.PuertaSecreta:
-                Debug.Log("La Puerta Secreta se ha revelado...");
-                // Podrías abrir una puerta en el mapa o cambiar de escena
+                StartCoroutine(Escapar(inventario));
                 break;
         }
     }
-
-
 
     IEnumerator InvocarHakoOnna()
     {
         GameObject Hako = ControladorItems.Instance.Muerte;
         Player.JugadorEnMovimiento = false;
         CartasRuido.YaEligio = false;
+
         Hako.SetActive(true);
-        Debug.Log("Hako Onna aparecio!");
+        Debug.Log("Hako Onna apareció...");
+
+        Player jugador = GetJugadorActual();
+        if (jugador != null)
+            yield return EncuentroConHako(jugador);
+
         yield return new WaitForSeconds(4f);
-        Turnos.Instance.NextTurn();
         Hako.SetActive(false);
+        enEvento = false;
     }
-      
+
+    IEnumerator InvocarHakobito()
+    {
+        GameObject Hakobito = ControladorItems.Instance.MuerteHakobito;
+        Player.JugadorEnMovimiento = false;
+        CartasRuido.YaEligio = false;
+
+        Hakobito.SetActive(true);
+        Debug.Log("Hakobito apareció...");
+
+        Player jugador = GetJugadorActual();
+        if (jugador != null)
+            yield return AsesinatoDeHakobito(jugador);
+
+        yield return new WaitForSeconds(4f);
+        Hakobito.SetActive(false);
+        enEvento = false;
+    }
+
+    IEnumerator VictoriaConSombrero(Inventario inventario)
+    {
+        bool tieneSemillas = inventario.ObtenerItems().Exists(i => i && i.name.Contains("Semillas mostaza"));
+
+        if (tieneSemillas)
+        {
+            CanvasVictoria.SetActive(true);
+            Player.JugadorEnMovimiento = false;
+            Debug.Log("¡Has ganado! Tienes las semillas y el sombrero.");
+        }
+        else
+        {
+            Textito.text = "No tienes las semillas mostaza... pierdes el turno.";
+            Player.JugadorEnMovimiento = false;
+            yield return new WaitForSeconds(2f);
+            Turnos.Instance.NextTurn();
+        }
+        enEvento = false;
+    }
+
+    IEnumerator Escapar(Inventario inventario)
+    {
+        bool tieneLlaves = inventario.ObtenerItems().Exists(i => i && i.name.Contains("Llaves"));
+
+        if (tieneLlaves)
+        {
+            CanvasVictoria.SetActive(true);
+            Player.JugadorEnMovimiento = false;
+            Debug.Log("¡Has ganado! Lograste escapar.");
+        }
+        else
+        {
+            Textito.text = "No tienes las llaves... pierdes el turno.";
+            Player.JugadorEnMovimiento = false;
+            yield return new WaitForSeconds(2f);
+            Turnos.Instance.NextTurn();
+        }
+        enEvento = false;
+    }
+
+    IEnumerator EncuentroConHako(Player jugador)
+    {
+        Inventario inventario = jugador.GetComponent<Inventario>();
+        GameObject debilidadReal = ControladorItems.Instance.DebilidadDeHako;
+
+        bool tieneDebilidad = inventario.ObtenerItems().Exists(i => i && i.name == debilidadReal.name);
+
+        if (tieneDebilidad)
+            yield return VictoriaJugador(jugador);
+        else
+            yield return AsesinatoDeHako(jugador);
+    }
+
+    IEnumerator VictoriaJugador(Player jugador)
+    {
+        Debug.Log($"{jugador.name} ha ganado derrotando a Hako Onna.");
+        CanvasVictoria.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        enEvento = false;
+    }
+
+    IEnumerator AsesinatoDeHako(Player jugador)
+    {
+        GameObject Hako = ControladorItems.Instance.Muerte;
+        Hako.SetActive(true);
+        yield return new WaitForSeconds(2f);
+
+        Inventario inv = jugador.GetComponent<Inventario>();
+        if (inv != null)
+        {
+            inv.LimpiarInventarioVisual();
+            inv.ObtenerItems().Clear();
+        }
+
+        Destroy(jugador.gameObject);
+        Debug.Log($"{jugador.name} fue asesinado por Hako Onna.");
+
+        yield return new WaitForSeconds(3f);
+        ControladorItems.Instance.EsconderHakobito();
+        Hako.SetActive(false);
+        Turnos.Instance.NextTurn();
+        enEvento = false;
+    }
+
+    IEnumerator AsesinatoDeHakobito(Player jugador)
+    {
+        GameObject Hakobito = ControladorItems.Instance.MuerteHakobito;
+        Hakobito.SetActive(true);
+        yield return new WaitForSeconds(2f);
+
+        Inventario inv = jugador.GetComponent<Inventario>();
+        if (inv != null)
+        {
+            inv.LimpiarInventarioVisual();
+            inv.ObtenerItems().Clear();
+        }
+
+        Destroy(jugador.gameObject);
+        Debug.Log($"{jugador.name} fue asesinado por un Hakobito.");
+
+        yield return new WaitForSeconds(3f);
+        ControladorItems.Instance.EsconderHakobito();
+        Hakobito.SetActive(false);
+        Turnos.Instance.NextTurn();
+        enEvento = false;
+    }
+
+    Player GetJugadorActual()
+    {
+        foreach (Player p in FindObjectsOfType<Player>())
+            if (p.playerInTurn)
+                return p;
+        return null;
+    }
+
+    void CrearTache(GameObject prefab)
+    {
+        GameObject tache = Instantiate(prefab, transform.position, Quaternion.identity, transform);
+        tache.transform.localPosition = Vector3.zero;
+        tache.transform.localScale = Vector3.one;
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, Radio);
     }
 }
+
+

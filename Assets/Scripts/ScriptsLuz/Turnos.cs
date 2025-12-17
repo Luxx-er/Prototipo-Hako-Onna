@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public enum Actions { INVESTIGAR, AVANZAR, PASAR }
@@ -17,8 +18,10 @@ public class Plyr
 
 public class Turnos : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI Textito;
     public List<Player> playerList = new List<Player>();
     [SerializeField] private Plyr[] players;
+    [SerializeField] GameObject Derrota;
     public int currentPlayer = 0;
 
     public static Turnos Instance { get; private set; }
@@ -60,16 +63,30 @@ public class Turnos : MonoBehaviour
 
     public void NextTurn()
     {
+        Textito.text = "";
+        if (playerList == null || playerList.Count == 0)
+        {
+            Debug.LogWarning("No hay jugadores en la lista. No se puede avanzar el turno.");
+            Derrota.SetActive(true);
+            return;
+        }
+        playerList.RemoveAll(p => p == null);
+
+        if (playerList.Count == 0)
+        {
+            Debug.Log("Todos los jugadores han muerto. Fin del juego.");
+            return;
+        }
         currentPlayer++;
         if (currentPlayer >= playerList.Count)
             currentPlayer = 0;
-
         TurnCamera();
         ActualizarInventariosUI();
         AccionesJugador.Instance.ActivarBotones();
         CartasRuido.YaEligio = false;
-        Debug.Log("Turno de " + players[currentPlayer].name);
+        Debug.Log($"Turno de {playerList[currentPlayer].name}");
     }
+
     public void ActualizarInventariosUI()
     {
         foreach (Player p in playerList)

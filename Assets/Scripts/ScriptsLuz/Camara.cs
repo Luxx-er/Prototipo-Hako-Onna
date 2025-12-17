@@ -1,5 +1,4 @@
 using Cinemachine;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,9 +8,20 @@ public class Camara : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera follows;
     [SerializeField] private Turnos turnos;
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        follows.Follow = turnos.playerList[turnos.currentPlayer].transform;
+        if (turnos == null || turnos.playerList == null || turnos.playerList.Count == 0)
+            return;
+        if (turnos.playerList[turnos.currentPlayer] == null)
+        {
+            Debug.LogWarning("El jugador actual fue destruido. Saltando al siguiente turno...");
+            turnos.NextTurn();
+            return;
+        }
+        Transform target = turnos.playerList[turnos.currentPlayer].transform;
+
+        if (follows != null && follows.Follow != target)
+            follows.Follow = target;
     }
 }
+
