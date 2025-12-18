@@ -26,7 +26,7 @@ public class ItemsAleatorios : MonoBehaviour
     [SerializeField] private GameObject CanvasDerrota;
     [SerializeField] private TextMeshProUGUI Textito;
     public AudioSource SoniditoItem;
-
+    public GameManager gameManager;
     private static bool enEvento = false;
 
     private void Start()
@@ -159,7 +159,9 @@ public class ItemsAleatorios : MonoBehaviour
             CasillaBloqueadaPermanente = true;
         }
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
+        gameManager.EjecutarAnimacion();
+        yield return new WaitForSeconds(1f);
         Turnos.Instance.NextTurn();
         enEvento = false;
     }
@@ -204,7 +206,7 @@ public class ItemsAleatorios : MonoBehaviour
         if (jugador != null)
             yield return EncuentroConHako(jugador);
 
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(6f);
         Hako.SetActive(false);
         enEvento = false;
     }
@@ -223,7 +225,7 @@ public class ItemsAleatorios : MonoBehaviour
         if (jugador != null)
             yield return AsesinatoDeHakobito(jugador);
 
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(6f);
         Hakobito.SetActive(false);
         enEvento = false;
     }

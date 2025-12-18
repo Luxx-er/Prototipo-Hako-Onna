@@ -8,7 +8,6 @@ public class CartasRuido : MonoBehaviour
     [Header("UI y Canvas")]
     [SerializeField] private TextMeshProUGUI TextoDecantidad;
     [SerializeField] private GameObject CanvasRuido;
-    [SerializeField] private GameObject CanvasHako;
     [SerializeField] private CanvasGroup Mazo;
     [SerializeField] private GameObject Carta0;
     [SerializeField] private GameObject Carta1;
@@ -16,6 +15,7 @@ public class CartasRuido : MonoBehaviour
     [SerializeField] private GameObject Carta3;
     [SerializeField] private GameObject Carta4;
     [SerializeField] private GameObject Carta5;
+    public GameManager gameManager;
     public AudioSource Estruendo;
 
     [Header("Prefabs y puntos de aparición")]
@@ -113,8 +113,8 @@ public class CartasRuido : MonoBehaviour
     {
         HakoEnTurno = true;
         Estruendo.Play();
-        CanvasHako.SetActive(true);
         CanvasRuido.SetActive(false);
+        gameManager.EjecutarAnimacionRuido();
         Player.JugadorEnMovimiento = false;
         AccionesJugador.JugadorInvestiga = false;
         AccionesJugador.JugadorSeMueve = false;
@@ -136,14 +136,13 @@ public class CartasRuido : MonoBehaviour
         yield return new WaitForSeconds(1f);
         StartCoroutine(ReiniciarCartas());
 
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(6f);
 
         HakoEnTurno = false;
         hakoActivada = false; 
         Player.JugadorEnMovimiento = false;
         YaEligio = false;
         AccionesJugador.Instance.ActivarBotones();
-        CanvasHako.SetActive(false);
         Debug.Log("Hako Onna terminó su efecto.");
     }
 
