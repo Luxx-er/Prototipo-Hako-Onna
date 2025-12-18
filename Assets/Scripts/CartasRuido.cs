@@ -16,6 +16,7 @@ public class CartasRuido : MonoBehaviour
     [SerializeField] private GameObject Carta3;
     [SerializeField] private GameObject Carta4;
     [SerializeField] private GameObject Carta5;
+    public AudioSource Estruendo;
 
     [Header("Prefabs y puntos de aparición")]
     [SerializeField] private List<GameObject> PrefabsCartas;
@@ -111,6 +112,7 @@ public class CartasRuido : MonoBehaviour
     IEnumerator ActivaHakoOnna()
     {
         HakoEnTurno = true;
+        Estruendo.Play();
         CanvasHako.SetActive(true);
         CanvasRuido.SetActive(false);
         Player.JugadorEnMovimiento = false;

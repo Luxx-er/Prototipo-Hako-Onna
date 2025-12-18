@@ -18,7 +18,7 @@ public class AccionesJugador : MonoBehaviour
     [SerializeField] public Button Investiga;
     private int cantidadAnterior = -1;
     [SerializeField] private List<GameObject> Jugadores = new List<GameObject>();
-    
+    public AudioSource Click;
     public static AccionesJugador Instance { get; private set; }
 
     private void Awake()
@@ -47,6 +47,7 @@ public class AccionesJugador : MonoBehaviour
     }
     public void MoveOrInvestigate()
     {
+        Click.Play();
         Debug.Log("Panel de Cartas");
         JugadorInvestiga = true;
         ItemsAleatorios.Investiga = true; //booleana referenciando el codigo de ItemsAleatorios
@@ -56,7 +57,7 @@ public class AccionesJugador : MonoBehaviour
     }
     public void CambiaDeCuarto()
     {
-        Debug.Log("Panel de Cartas");
+        Click.Play();
         JugadorSeMueve = true;
         Puertas.SeMovera = true;  //booleana referenciando el codigo de Puertas
         Investiga.interactable = false;
@@ -65,13 +66,13 @@ public class AccionesJugador : MonoBehaviour
     }
     public void SiguienteTurno()
     {
-        Debug.Log("SaltasteTurno SIGUIENTE TURNO");
+        Click.Play();
         Investiga.interactable = false;
         PasaDeTurno.interactable = false;
         SeMueve.interactable = false;
         Turnos.Instance.NextTurn();
         PanelTurno.SetActive(true);
-        Turno.text = "Siguiente Turno";
+        Turno.text = "Omision";
     }
     public void ActivarBotones()
     {

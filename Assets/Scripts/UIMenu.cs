@@ -5,14 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class UIMenu : MonoBehaviour
 {
-
+    public AudioSource Boton;
     public void Jugar()
     {
-        SceneManager.LoadScene("CantJugadores");
+        Boton.Play();
+        StartCoroutine(CambioEscena());
     }
     public void Siguiente()
     {
         SceneManager.LoadScene("InterfazPrincipal");
     }
-
+    IEnumerator CambioEscena()
+    {
+        
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadScene("CantJugadores");
+    }
 }

@@ -11,6 +11,8 @@ public class ControladorItems : MonoBehaviour
     public GameObject Muerte;
     public GameObject MuerteHakobito;
     public GameObject Llaves;
+    public AudioSource ScreamerCegua;
+    public AudioSource ScreamerCeguita;
 
     [Header("Debilidades de Hako Onna")]
     public List<GameObject> Debilidades = new List<GameObject>(); // Las 3 posibles debilidades

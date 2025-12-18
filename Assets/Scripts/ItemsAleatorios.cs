@@ -20,11 +20,12 @@ public class ItemsAleatorios : MonoBehaviour
     public List<GameObject> Jugadores;
     public Animator animator;
 
-    [Header("Canvas")]
+    [Header("Canvas y audios")]
     [SerializeField] private GameObject CanvasCajaFuerte;
     [SerializeField] private GameObject CanvasVictoria;
     [SerializeField] private GameObject CanvasDerrota;
     [SerializeField] private TextMeshProUGUI Textito;
+    public AudioSource SoniditoItem;
 
     private static bool enEvento = false;
 
@@ -104,7 +105,7 @@ public class ItemsAleatorios : MonoBehaviour
         GameObject prefabItem = ControladorItems.Instance.ObtenerItemAleatorio();
         GameObject Tache = ControladorItems.Instance.Tache;
         Player.JugadorEnMovimiento = false;
-
+        SoniditoItem.Play();
         if (prefabItem == null)
         {
             enEvento = false;
@@ -192,9 +193,10 @@ public class ItemsAleatorios : MonoBehaviour
     IEnumerator InvocarHakoOnna()
     {
         GameObject Hako = ControladorItems.Instance.Muerte;
+        AudioSource ScreamHako = ControladorItems.Instance.ScreamerCegua;
         Player.JugadorEnMovimiento = false;
         CartasRuido.YaEligio = false;
-
+        ScreamHako.Play();
         Hako.SetActive(true);
         Debug.Log("Hako Onna apareció...");
 
@@ -210,9 +212,10 @@ public class ItemsAleatorios : MonoBehaviour
     IEnumerator InvocarHakobito()
     {
         GameObject Hakobito = ControladorItems.Instance.MuerteHakobito;
+        AudioSource ScreamHakobito = ControladorItems.Instance.ScreamerCeguita;
         Player.JugadorEnMovimiento = false;
         CartasRuido.YaEligio = false;
-
+        ScreamHakobito.Play();
         Hakobito.SetActive(true);
         Debug.Log("Hakobito apareció...");
 
