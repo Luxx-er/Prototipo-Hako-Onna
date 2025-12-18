@@ -72,7 +72,7 @@ public class CartasRuido : MonoBehaviour
         Flipeo.Play();
         Debug.Log($"Sacaste la carta: {CartaSacada}");
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         AcumularCartas();
 

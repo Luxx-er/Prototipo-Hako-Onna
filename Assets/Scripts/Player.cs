@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     public static bool Quieto = true;
     public bool playerInTurn;
     public static bool JugadorVivo = true;
+    public AudioSource Pasos;
     public static Player Instance { get; private set; }
 
     [SerializeField] private Animator animator;
@@ -57,6 +58,7 @@ public class Player : MonoBehaviour
             {
                 inputDir = Vector2.zero;  //los dos valores son 0 
                 Quieto = true;
+                Pasos.Stop();
             }
             
             if (inputDir != Vector2.zero) //detectar si hay un objeto enfrente
@@ -68,7 +70,10 @@ public class Player : MonoBehaviour
                 {
                     targetPos = target;
                     HasInput = true; //Ya se puede mover
-
+                    if (!Pasos.isPlaying)
+                    {
+                        Pasos.Play();
+                    }
                     //Animator va aqui
                     if (animator)
                     {

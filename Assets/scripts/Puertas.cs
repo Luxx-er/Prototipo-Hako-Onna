@@ -13,7 +13,7 @@ public class Puertas : MonoBehaviour
     public Direccion direccion;
     public float DistanciaSalto = 7f;
     public List<GameObject> Jugadores;
-
+    public GameManager gameManager;
     private void Start()
     {
         Player[] Personajes = FindObjectsOfType<Player>();
@@ -62,7 +62,7 @@ public class Puertas : MonoBehaviour
             }
 
             player.position = nuevaPos;
-
+            gameManager.EjecutarAnimacion();
             StartCoroutine(Cambio());
             CartasRuido.YaEligio = false;
         }
@@ -70,7 +70,7 @@ public class Puertas : MonoBehaviour
 
     IEnumerator Cambio()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         Turnos.Instance.NextTurn();
     }
 

@@ -19,6 +19,7 @@ public class AccionesJugador : MonoBehaviour
     private int cantidadAnterior = -1;
     [SerializeField] private List<GameObject> Jugadores = new List<GameObject>();
     public AudioSource Click;
+    public GameManager GameManager;
     public static AccionesJugador Instance { get; private set; }
 
     private void Awake()
@@ -66,6 +67,7 @@ public class AccionesJugador : MonoBehaviour
     }
     public void SiguienteTurno()
     {
+        GameManager.EjecutarAnimacion();
         Click.Play();
         Investiga.interactable = false;
         PasaDeTurno.interactable = false;
