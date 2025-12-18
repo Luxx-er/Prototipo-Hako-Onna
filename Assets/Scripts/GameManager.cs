@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public GameObject Player3;
     public GameObject Player4;
     public GameObject Cambio;
+    public GameObject CambioRuido;
     public Animator animatorCambio;
     public Animator animatorCambioRuido;
     void Start()

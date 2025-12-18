@@ -205,7 +205,6 @@ public class ItemsAleatorios : MonoBehaviour
         Player jugador = GetJugadorActual();
         if (jugador != null)
             yield return EncuentroConHako(jugador);
-
         yield return new WaitForSeconds(6f);
         Hako.SetActive(false);
         enEvento = false;
@@ -226,6 +225,8 @@ public class ItemsAleatorios : MonoBehaviour
             yield return AsesinatoDeHakobito(jugador);
 
         yield return new WaitForSeconds(6f);
+        gameManager.EjecutarAnimacion();
+        yield return new WaitForSeconds(1f);
         Hakobito.SetActive(false);
         enEvento = false;
     }
@@ -308,6 +309,8 @@ public class ItemsAleatorios : MonoBehaviour
         Debug.Log($"{jugador.name} fue asesinado por Hako Onna.");
 
         yield return new WaitForSeconds(3f);
+        gameManager.EjecutarAnimacion();
+        yield return new WaitForSeconds(1f);
         ControladorItems.Instance.EsconderHakobito();
         Hako.SetActive(false);
         Turnos.Instance.NextTurn();
@@ -331,6 +334,8 @@ public class ItemsAleatorios : MonoBehaviour
         Debug.Log($"{jugador.name} fue asesinado por un Hakobito.");
 
         yield return new WaitForSeconds(3f);
+        gameManager.EjecutarAnimacion();
+        yield return new WaitForSeconds(1f);
         ControladorItems.Instance.EsconderHakobito();
         Hakobito.SetActive(false);
         Turnos.Instance.NextTurn();

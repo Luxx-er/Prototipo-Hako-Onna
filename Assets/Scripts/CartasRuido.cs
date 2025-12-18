@@ -17,6 +17,7 @@ public class CartasRuido : MonoBehaviour
     [SerializeField] private GameObject Carta5;
     public GameManager gameManager;
     public AudioSource Estruendo;
+    public AudioSource Flipeo;
 
     [Header("Prefabs y puntos de aparición")]
     [SerializeField] private List<GameObject> PrefabsCartas;
@@ -68,7 +69,7 @@ public class CartasRuido : MonoBehaviour
         CartaSacada = Cartas[CartaRandom];
         Cartas.RemoveAt(CartaRandom);
         RuidoTotal += CartaSacada;
-
+        Flipeo.Play();
         Debug.Log($"Sacaste la carta: {CartaSacada}");
 
         yield return new WaitForSeconds(2f);
