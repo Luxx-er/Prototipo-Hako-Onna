@@ -22,6 +22,7 @@ public class Turnos : MonoBehaviour
     public List<Player> playerList = new List<Player>();
     [SerializeField] private Plyr[] players;
     [SerializeField] GameObject Derrota;
+    public GameManager gameManager;
     public int currentPlayer = 0;
 
     public static Turnos Instance { get; private set; }
@@ -67,7 +68,6 @@ public class Turnos : MonoBehaviour
         if (playerList == null || playerList.Count == 0)
         {
             Debug.LogWarning("No hay jugadores en la lista. No se puede avanzar el turno.");
-            Derrota.SetActive(true);
             return;
         }
         playerList.RemoveAll(p => p == null);

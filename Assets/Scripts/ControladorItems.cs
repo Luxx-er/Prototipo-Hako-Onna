@@ -10,9 +10,12 @@ public class ControladorItems : MonoBehaviour
     public GameObject Tache;
     public GameObject Muerte;
     public GameObject MuerteHakobito;
+    public GameObject Derrota;
     public GameObject Llaves;
     public AudioSource ScreamerCegua;
     public AudioSource ScreamerCeguita;
+    public AudioSource Victoria;
+    public AudioSource Moriste;
 
     [Header("Debilidades de Hako Onna")]
     public List<GameObject> Debilidades = new List<GameObject>(); // Las 3 posibles debilidades
@@ -82,15 +85,22 @@ public class ControladorItems : MonoBehaviour
                 casilla.Obtenido = false;
                 ItemsAleatorios.Investiga = false;
 
+                if (casilla.animator != null)
+                {
+                    casilla.animator.SetBool("Obtenido", false);
+                }
+
                 foreach (Transform hijo in casilla.transform)
                 {
-                    if (hijo.name.Contains("X")) // eliminar taches
+                    if (hijo.name.Contains("X") || hijo.CompareTag("Item"))
                         Destroy(hijo.gameObject);
                 }
             }
+
             if (!casilla.Obtenido && !casilla.HakobitoAqui)
                 disponibles.Add(casilla);
         }
+
         if (disponibles.Count > 0)
         {
             ItemsAleatorios nuevaCasilla = disponibles[Random.Range(0, disponibles.Count)];

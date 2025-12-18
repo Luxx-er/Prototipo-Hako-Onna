@@ -11,9 +11,10 @@ public class Puertas : MonoBehaviour
     public static bool SeMovera = false;
     public enum Direccion { Norte, Sur, Este, Oeste} //Enum = Lista
     public Direccion direccion;
-    public float DistanciaSalto = 7f;
+    public float DistanciaSalto;
     public List<GameObject> Jugadores;
     public GameManager gameManager;
+    public AudioSource Puerta;
     private void Start()
     {
         Player[] Personajes = FindObjectsOfType<Player>();
@@ -33,10 +34,11 @@ public class Puertas : MonoBehaviour
         foreach (GameObject obj in Jugadores)
         {
             if (obj == null) continue;
-
+             
             Player Jugador = obj.GetComponent<Player>();
             if (Jugador != null && Jugador.playerInTurn)
             {
+                DistanciaSalto = Jugador.DistanciaDeSalto;
                 player = obj.transform;
                 break;
             }
@@ -62,6 +64,7 @@ public class Puertas : MonoBehaviour
             }
 
             player.position = nuevaPos;
+            Puerta.Play();
             gameManager.EjecutarAnimacion();
             StartCoroutine(Cambio());
             CartasRuido.YaEligio = false;

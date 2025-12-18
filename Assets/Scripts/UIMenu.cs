@@ -21,4 +21,22 @@ public class UIMenu : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         SceneManager.LoadScene("CantJugadores");
     }
+    public void Salir()
+    {
+        Boton.Play();
+        Application.Quit();
+        Debug.Log("Saliste del juego");
+    }
+    public void VolverAJugar()
+    {
+        SceneManager.LoadScene("CantJugadores");
+    }
+    public void SuicidioColectivo()
+    {
+        SceneManager.LoadScene("MenuPrincipal");
+    }
+    public void Reglamento()
+    {
+        Boton.Play();
+    }
 }

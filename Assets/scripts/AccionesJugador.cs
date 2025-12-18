@@ -55,6 +55,7 @@ public class AccionesJugador : MonoBehaviour
         Investiga.interactable = false; //No puedes interactuar con los botones porque se vuelven falsos 
         PasaDeTurno.interactable = false; 
         SeMueve.interactable = false;
+        Turno.text = "Investiga la habitacion";
     }
     public void CambiaDeCuarto()
     {
@@ -64,6 +65,7 @@ public class AccionesJugador : MonoBehaviour
         Investiga.interactable = false;
         PasaDeTurno.interactable = false;
         SeMueve.interactable = false;
+        Turno.text = "Muevete de habitacion";
     }
     public void SiguienteTurno()
     {
@@ -74,7 +76,7 @@ public class AccionesJugador : MonoBehaviour
         SeMueve.interactable = false;
         Turnos.Instance.NextTurn();
         PanelTurno.SetActive(true);
-        Turno.text = "Omision";
+        Turno.text = "Omites turno";
     }
     public void ActivarBotones()
     {

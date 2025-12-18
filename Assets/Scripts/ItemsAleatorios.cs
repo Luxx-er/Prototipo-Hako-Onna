@@ -120,6 +120,7 @@ public class ItemsAleatorios : MonoBehaviour
         Investiga = false;
 
         Debug.Log($"Has encontrado: {prefabItem.name}");
+        animator.SetBool("Obtenido", true);
         yield return new WaitForSeconds(2f);
 
         Player jugadorActual = GetJugadorActual();
@@ -204,7 +205,7 @@ public class ItemsAleatorios : MonoBehaviour
 
         Player jugador = GetJugadorActual();
         if (jugador != null)
-            yield return EncuentroConHako(jugador);
+        yield return EncuentroConHako(jugador);
         yield return new WaitForSeconds(6f);
         Hako.SetActive(false);
         enEvento = false;
@@ -225,8 +226,6 @@ public class ItemsAleatorios : MonoBehaviour
             yield return AsesinatoDeHakobito(jugador);
 
         yield return new WaitForSeconds(6f);
-        gameManager.EjecutarAnimacion();
-        yield return new WaitForSeconds(1f);
         Hakobito.SetActive(false);
         enEvento = false;
     }
@@ -237,7 +236,13 @@ public class ItemsAleatorios : MonoBehaviour
 
         if (tieneSemillas)
         {
+            gameManager.EjecutarAnimacion();
+            yield return new WaitForSeconds(1f);
             CanvasVictoria.SetActive(true);
+            AudioSource MusicGame = CantidadJugadores.Instance.MusicaGeneral;
+            MusicGame.Stop();
+            AudioSource MusicVictory = ControladorItems.Instance.Victoria;
+            MusicVictory.Play();
             Player.JugadorEnMovimiento = false;
             Debug.Log("¡Has ganado! Tienes las semillas y el sombrero.");
         }
@@ -257,6 +262,12 @@ public class ItemsAleatorios : MonoBehaviour
 
         if (tieneLlaves)
         {
+            gameManager.EjecutarAnimacion();
+            yield return new WaitForSeconds(1f);
+            AudioSource MusicGame = CantidadJugadores.Instance.MusicaGeneral;
+            MusicGame.Stop();
+            AudioSource MusicVictory = ControladorItems.Instance.Victoria;
+            MusicVictory.Play();
             CanvasVictoria.SetActive(true);
             Player.JugadorEnMovimiento = false;
             Debug.Log("¡Has ganado! Lograste escapar.");
@@ -287,6 +298,12 @@ public class ItemsAleatorios : MonoBehaviour
     IEnumerator VictoriaJugador(Player jugador)
     {
         Debug.Log($"{jugador.name} ha ganado derrotando a Hako Onna.");
+        gameManager.EjecutarAnimacion();
+        yield return new WaitForSeconds(1f);
+        AudioSource MusicGame = CantidadJugadores.Instance.MusicaGeneral;
+        MusicGame.Stop();
+        AudioSource MusicVictory = ControladorItems.Instance.Victoria;
+        MusicVictory.Play();
         CanvasVictoria.SetActive(true);
         yield return new WaitForSeconds(2f);
         enEvento = false;
@@ -294,7 +311,9 @@ public class ItemsAleatorios : MonoBehaviour
 
     IEnumerator AsesinatoDeHako(Player jugador)
     {
+        List<Player> list = Turnos.Instance.playerList;
         GameObject Hako = ControladorItems.Instance.Muerte;
+        GameObject Derrota = ControladorItems.Instance.Derrota;
         Hako.SetActive(true);
         yield return new WaitForSeconds(2f);
 
@@ -309,17 +328,36 @@ public class ItemsAleatorios : MonoBehaviour
         Debug.Log($"{jugador.name} fue asesinado por Hako Onna.");
 
         yield return new WaitForSeconds(3f);
-        gameManager.EjecutarAnimacion();
-        yield return new WaitForSeconds(1f);
-        ControladorItems.Instance.EsconderHakobito();
-        Hako.SetActive(false);
-        Turnos.Instance.NextTurn();
-        enEvento = false;
+        if (list.Count != 0)
+        {
+            gameManager.EjecutarAnimacion();
+            yield return new WaitForSeconds(1f);
+            ControladorItems.Instance.EsconderHakobito();
+            Hako.SetActive(false);
+            Turnos.Instance.NextTurn();
+            enEvento = false;
+        }
+        else if (list.Count == 0)
+        {
+            yield return new WaitForSeconds(3f);
+            gameManager.EjecutarAnimacion();
+            yield return new WaitForSeconds(1f);
+            Hako.SetActive(false);
+            Derrota.SetActive(true);
+            AudioSource MusicGame = CantidadJugadores.Instance.MusicaGeneral;
+            MusicGame.Stop();
+            AudioSource MusicDefeat = ControladorItems.Instance.Moriste;
+            MusicDefeat.Play();
+
+        }
+        
     }
 
     IEnumerator AsesinatoDeHakobito(Player jugador)
     {
+        List<Player> list = Turnos.Instance.playerList;
         GameObject Hakobito = ControladorItems.Instance.MuerteHakobito;
+        GameObject Derrota = ControladorItems.Instance.Derrota;
         Hakobito.SetActive(true);
         yield return new WaitForSeconds(2f);
 
@@ -334,12 +372,28 @@ public class ItemsAleatorios : MonoBehaviour
         Debug.Log($"{jugador.name} fue asesinado por un Hakobito.");
 
         yield return new WaitForSeconds(3f);
-        gameManager.EjecutarAnimacion();
-        yield return new WaitForSeconds(1f);
-        ControladorItems.Instance.EsconderHakobito();
-        Hakobito.SetActive(false);
-        Turnos.Instance.NextTurn();
-        enEvento = false;
+        if(list.Count != 0)
+        {
+            gameManager.EjecutarAnimacion();
+            yield return new WaitForSeconds(1f);
+            ControladorItems.Instance.EsconderHakobito();
+            Hakobito.SetActive(false);
+            Turnos.Instance.NextTurn();
+            enEvento = false;
+        }
+        else if (list.Count == 0)
+        {
+            yield return new WaitForSeconds(3f);
+            gameManager.EjecutarAnimacion();
+            yield return new WaitForSeconds(1f);
+            Hakobito.SetActive(false);
+            Derrota.SetActive(true);
+            AudioSource MusicGame = CantidadJugadores.Instance.MusicaGeneral;
+            MusicGame.Stop();
+            AudioSource MusicDefeat = ControladorItems.Instance.Moriste;
+            MusicDefeat.Play();
+        }
+
     }
 
     Player GetJugadorActual()

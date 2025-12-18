@@ -25,16 +25,20 @@ public class CajaFuerte : MonoBehaviour
 
     public static bool CajaAbierta = false; //Booleana falsa para cuando desbloques la caja fuerte te de el item y se vuelva verdadera
     [SerializeField] private GameObject CanvasCajaFuerte;
+    public AudioSource NumerosRuido;
+    public AudioSource ContraseñaErronea;
+    public AudioSource LlavesObtenidas;
+    public GameManager GameManager;
     void Start()
     {
         CodigoRandom(); //Cuando inica sale el codigo random 
     }
-    public void MasD1() { if (D1 < 9) { D1++; Digito1.text = D1.ToString(); } }
-    public void MenosD1() { if (D1 > 0) { D1--; Digito1.text = D1.ToString(); } }
-    public void MasD2() { if (D2 < 9) { D2++; Digito2.text = D2.ToString(); } }
-    public void MenosD2() { if (D2 > 0) { D2--; Digito2.text = D2.ToString(); } }
-    public void MasD3() { if (D3 < 9) { D3++; Digito3.text = D3.ToString(); } }
-    public void MenosD3() { if (D3 > 0) { D3--; Digito3.text = D3.ToString(); } }
+    public void MasD1() { if (D1 < 9) { D1++; Digito1.text = D1.ToString(); if (!NumerosRuido.isPlaying) { NumerosRuido.Play(); } } }
+    public void MenosD1() { if (D1 > 0) { D1--; Digito1.text = D1.ToString(); if (!NumerosRuido.isPlaying) { NumerosRuido.Play(); } } }
+    public void MasD2() { if (D2 < 9) { D2++; Digito2.text = D2.ToString(); if (!NumerosRuido.isPlaying) { NumerosRuido.Play(); } } }
+    public void MenosD2() { if (D2 > 0) { D2--; Digito2.text = D2.ToString(); if (!NumerosRuido.isPlaying) { NumerosRuido.Play(); } } }
+    public void MasD3() { if (D3 < 9) { D3++; Digito3.text = D3.ToString(); if (!NumerosRuido.isPlaying) { NumerosRuido.Play(); } } }
+    public void MenosD3() { if (D3 > 0) { D3--; Digito3.text = D3.ToString(); if (!NumerosRuido.isPlaying) { NumerosRuido.Play(); } } }
 
     public void Abrir()
     {
@@ -51,6 +55,7 @@ public class CajaFuerte : MonoBehaviour
         if (correcta && !LlavesConseguidas)
         {
             Textito.text = "Clave correcta. Llaves conseguidas.";
+            LlavesObtenidas.Play();
             LlavesConseguidas = true;
 
             // Buscar al jugador actual
@@ -80,13 +85,15 @@ public class CajaFuerte : MonoBehaviour
         }
         else if (correcta && LlavesConseguidas)
         {
-            Textito.text = "La caja fuerte ya está vacía.";
+            Textito.text = "La caja fuerte ya esta vacia.";
+            ContraseñaErronea.Play();
             CanvasCajaFuerte.SetActive(false);
             yield return new WaitForSeconds(2f);
         }
         else
         {
             Textito.text = "Clave incorrecta... pierdes turno.";
+            ContraseñaErronea.Play();
             CanvasCajaFuerte.SetActive(false);
             yield return new WaitForSeconds(2f);
         }
@@ -94,7 +101,8 @@ public class CajaFuerte : MonoBehaviour
         Player.PuedeInteractuar = false;
         ItemsAleatorios.Investiga = false;
         CartasRuido.YaEligio = false;
-
+        GameManager.EjecutarAnimacion();
+        yield return new WaitForSeconds(1f);
         Turnos.Instance.NextTurn();
     }
 

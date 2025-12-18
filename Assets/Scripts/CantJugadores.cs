@@ -18,10 +18,11 @@ public class CantidadJugadores : MonoBehaviour
     public bool LimiteInferior = true;
     int Cant = 2;
     public static int CantFinal;
-
+    public static CantidadJugadores Instance { get; private set; }
     private void Awake()
     {
         DontDestroyOnLoad(MusicaGeneral);
+        Instance = this;
     }
     public void MasJugadores()
     {
